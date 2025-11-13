@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - EduBridge</title>
+    <!-- Tailwind CSS CDN (unchanged for consistency) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- AOS for scroll animations (unchanged) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Heroicons (unchanged) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/heroicons/2.0.18/24/outline/index.min.css">
+    <style>
+        /* Modernized Custom Styles: Soft blues/teals, gradients, rounded corners */
+        :root {  --primary-blue: #1E40AF;  --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        .light { --bg: #f8fafc; --card-bg: white; --text: #333; --border: #e2e8f0; }
+        .dark { --bg: #0f172a; --card-bg: #1e293b; --text: #e2e8f0; --border: #334155; }
+        body { background: var(--bg); color: var(--text); transition: all 0.3s ease; }
+        .dark body { background: var(--bg); color: var(--text); }
+        /* Consistent rounded corners and shadows */
+        .card { background: var(--card-bg); border-radius: 1rem; box-shadow: var(--shadow-soft); transition: all 0.3s ease; }
+        .card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); }
+        /* Smooth hover transitions */
+        .transition-all { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        /* Progress ring and animations (enhanced with teal accents) */
+        .progress-ring { transform: rotate(-90deg); }
+        .progress-ring__circle { transition: stroke-dashoffset 0.7s ease; stroke: var(--accent-green); }
+        /* FAQ and step hovers */
+        .faq-card:hover { transform: scale(1.02); border-color: var(--primary-teal); }
+        .step:hover .step-icon { color: var(--primary-teal); transform: scale(1.1); }
+        .animate-wobble { animation: wobble 1s ease-in-out; }
+        .animate-flow { animation: flow 2s ease-in-out infinite; }
+        /* Dark mode for cards */
+        .dark .card { background: var(--card-bg); }
+        /* Footer consistency */
+        footer { background: linear-gradient(135deg, var(--primary-blue), var(--primary-teal)); color: white; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300 pt-20">
+    <!-- Consistent Navigation Navbar (standardized across all pages) -->
+    <nav class="bg-white/95 backdrop-blur-md shadow-lg dark:bg-gray-800/95 dark:shadow-gray-900/50 fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between py-4">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center space-x-2">
+                    <svg class="w-8 h-8 text-primary-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                    </svg>
+                    <span class="text-xl font-bold text-primary-dark dark:text-gray-200">EduBridge</span>
+                </div>
+                <!-- Nav Links (Desktop) -->
+                <div class="hidden md:flex space-x-6">
+                    <a href="homepage.html" class="text-gray-600 hover:text-primary-blue dark:text-gray-300 dark:hover:text-primary-blue px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center">
+                     <i class="fa-solid fa-house mr-2"></i> Home</a>
+                <a href="student-lecture-page.html" class="block text-gray-700 dark:text-gray-200 px-3 py-2 rounded-md text-base font-medium transition-colors hover:text-primary-blue dark:hover:text-primary-blue flex items-center">
+                <i class="fa-solid fa-user-graduate mr-2"></i> Student Login</a>
+
+                <a href="Admin-dashboard.html" class="block text-gray-700 dark:text-gray-200 px-3 py-2 rounded-md text-base font-medium transition-colors hover:text-primary-blue dark:hover:text-primary-blue flex items-center">
+                <i class="fa-solid fa-user-shield mr-2"></i> Admin Login</a>
+
+                <a href="about.html" class="block text-gray-700 dark:text-gray-200 px-3 py-2 rounded-md text-base font-medium transition-colors hover:text-primary-blue dark:hover:text-primary-blue flex items-center">
+                <i class="fa-solid fa-circle-info mr-2"></i> About</a>
+
+                <a href="signup.html" class="block text-gray-700 dark:text-gray-200 px-3 py-2 rounded-md text-base font-medium transition-colors hover:text-primary-blue dark:hover:text-primary-blue flex items-center">
+                <i class="fa-solid fa-user-plus mr-2"></i> Signup</a>
+                </div>
+                <!-- Theme Toggle & Mobile Menu -->
+                <div class="flex items-center space-x-2 md:space-x-4">
+                    <button id="theme-toggle" class="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded-lg transition-colors">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <div class="md:hidden">
+                        <button id="mobile-menu-toggle" class="text-gray-600 dark:text-gray-300 hover:text-primary-blue dark:hover:text-primary-blue transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40 hidden">
+                <div class="absolute top-0 right-0 w-80 h-full bg-white dark:bg-gray-800 shadow-lg flex flex-col p-6 space-y-4 transform transition-transform duration-300">
+                    <button id="mobile-menu-close" class="self-end text-gray-600 dark:text-gray-300 hover:text-primary-blue dark:hover:text-primary-blue">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                   <a href="homepage.html" class="text-gray-600 hover:text-primary-blue dark:text-gray-300 dark:hover:text-primary-blue px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center">
+                     <i class="fa-solid fa-house mr-2"></i> Home</a>
+                <a href="student-lecture-page.html" class="block text-gray-700 dark:text-gray-200 px-3 py-2 rounded-md text-base font-medium transition-colors hover:text-primary-blue dark:hover:text-primary-blue flex items-center">
+                <i class="fa-solid fa-user-graduate mr-2"></i> Student Login</a>
+
+                <a href="Admin-dashboard.html" class="block text-gray-700 dark:text-gray-200 px-3 py-2 rounded-md text-base font-medium transition-colors hover:text-primary-blue dark:hover:text-primary-blue flex items-center">
+                <i class="fa-solid fa-user-shield mr-2"></i> Admin Login</a>
+
+                <a href="about.html" class="block text-gray-700 dark:text-gray-200 px-3 py-2 rounded-md text-base font-medium transition-colors hover:text-primary-blue dark:hover:text-primary-blue flex items-center">
+                <i class="fa-solid fa-circle-info mr-2"></i> About</a>
+
+                <a href="signup.html" class="block text-gray-700 dark:text-gray-200 px-3 py-2 rounded-md text-base font-medium transition-colors hover:text-primary-blue dark:hover:text-primary-blue flex items-center">
+                <i class="fa-solid fa-user-plus mr-2"></i> Signup</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section - Modernized with gradient overlay and smooth AOS fade-in -->
+    <section class="relative bg-gradient-to-br from-primary-blue via-blue-600 to-blue-400 text-white py-20 lg:py-32 text-center overflow-hidden">
+        <div class="absolute inset-0 bg-black/20"></div> <!-- Soft overlay for readability -->
+        <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6" data-aos="fade-up" data-aos-duration="800">Our Journey at EduBridge</h1>
+            <p class="text-xl sm:text-2xl opacity-90 max-w-3xl mx-auto leading-relaxed" data-aos="fade-up" data-aos-delay="200" data-aos-duration="800">From challenges to triumphs, discover how we're transforming education one learner at a time.</p>
+        </div>
+    </section>
+
+    <!-- Story Section - Enhanced with rounded images, hover shadows, and teal accents -->
+    <section class="py-16 bg-white dark:bg-gray-800" data-aos="fade-up" data-aos-duration="800">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl sm:text-4xl font-bold text-center text-primary-dark mb-12 dark:text-gray-200" data-aos="fade-down">A Transformative Story</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="card text-center" data-aos="slide-right" data-aos-delay="100">
+                    <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=400&h=300&fit=crop" alt="Student struggling" class="rounded-xl shadow-lg mx-auto mb-4 w-full h-48 object-cover transition-transform hover:scale-105">
+                    <h3 class="text-xl font-semibold mb-2 text-primary-teal">The Struggle</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Meet Ebiere, a high school student overwhelmed by complex subjects and lacking personalized guidance.</p>
+                </div>
+                <div class="card text-center" data-aos="slide-up" data-aos-delay="200">
+                    <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400&h=300&fit=crop" alt="Discovering platform" class="rounded-xl shadow-lg mx-auto mb-4 w-full h-48 object-cover transition-transform hover:scale-105">
+                    <h3 class="text-xl font-semibold mb-2 text-primary-teal">The Discovery</h3>
+                    <p class="text-gray-600 dark:text-gray-400">One day, Ebiere stumbles upon EduBridge and signs up for a free trial, unlocking interactive lessons tailored to their pace.</p>
+                </div>
+                <div class="card text-center" data-aos="slide-left" data-aos-delay="300">
+                    <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&h=300&q=80" alt="Academic success" class="rounded-xl shadow-lg mx-auto mb-4 w-full h-48 object-cover transition-transform hover:scale-105">
+                    <h3 class="text-xl font-semibold mb-2 text-primary-teal">The Triumph</h3>
+                    <p class="text-gray-600 dark:text-gray-400">With consistent support, Ebiere aces exams, builds confidence, and inspires peers—proving education can change lives.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- People Section - Added teal borders on hover, rounded avatars -->
+    <section class="py-16 bg-gray-50 dark:bg-gray-900" data-aos="fade-up" data-aos-duration="800">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl sm:text-4xl font-bold text-center text-primary-dark mb-12 dark:text-gray-200" data-aos="fade-down">Lives We've Changed</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="card text-center" data-aos="slide-right" data-aos-delay="100">
+                <img src="WIN_20251113_04_51_11_Pro.jpg" alt="Sarah" class="rounded-full mx-auto mb-4 shadow-md w-32 h-32 object-cover">
+                <h3 class="text-xl font-semibold mb-2 text-primary-teal">Ebiere's Journey</h3>
+                <p class="text-gray-600 dark:text-gray-400">From struggling in math to topping the class  EduBridge made learning enjoyable!</p>
+                </div>
+
+                <div class="card text-center" data-aos="slide-up" data-aos-delay="200">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&round" alt="Jamal" class="rounded-full mx-auto mb-4 shadow-md">
+                    <h3 class="text-xl font-semibold mb-2 text-primary-teal">Jamal's Breakthrough</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Overcame language barriers with interactive multilingual courses.</p>
+                </div>
+                <div class="card text-center" data-aos="slide-left" data-aos-delay="300">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&round" alt="Maria" class="rounded-full mx-auto mb-4 shadow-md">
+                    <h3 class="text-xl font-semibold mb-2 text-primary-teal">Maria's Confidence</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Gained skills for college admission through guided mentorship.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Challenges Section - Enhanced with gradient bars, teal icons, hover reveals -->
+    <section class="py-16 bg-white dark:bg-gray-800" data-aos="fade-up" data-aos-duration="800">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl sm:text-4xl font-bold text-center text-primary-dark mb-12 dark:text-gray-200" data-aos="fade-down">The Challenges We Tackle</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Challenge 1 -->
+                <div class="card text-center p-6" data-aos="slide-right" data-aos-delay="100">
+                    <svg class="w-16 h-16 text-accent-green mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                    <h3 class="text-xl font-semibold mb-2 text-primary-teal">Difficulty Understanding Lessons</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4">Complex topics feel overwhelming without clear breakdowns.</p>
+                    <div class="relative">
+                        <div class="w-full bg-gray-200 rounded-full h-2"><div class="bg-gradient-to-r from-primary-blue to-accent-green h-2 rounded-full w-[30%] group-hover:w-[85%] transition-all duration-300"></div></div>
+                        <span class="absolute hidden group-hover:block bg-primary-blue text-white text-xs px-2 py-1 rounded -top-8 left-1/2 transform -translate-x-1/2 whitespace-nowrap shadow-lg">85% improvement with visuals!</span>
+                    </div>
+                </div>
+                <!-- Challenge 2 -->
+                <div class="card text-center p-6" data-aos="slide-up" data-aos-delay="200">
+                    <svg class="w-16 h-16 text-yellow-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    <h3 class="text-xl font-semibold mb-2 text-primary-teal">Lack of Guidance</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4">Navigating alone leaves learners unsure of next steps.</p>
+                    <button class="text-primary-blue font-medium hover:underline" onclick="this.nextElementSibling.classList.toggle('hidden')">Explore Path</button>
+                    <div class="hidden mt-2 flex justify-around text-sm text-gray-500">
+                        <span>1. Assess</span><span>2. Connect</span><span>3. Succeed</span>
+                    </div>
+                </div>
+                <!-- Challenge 3 -->
+                <div class="card text-center p-6" data-aos="slide-left" data-aos-delay="300">
+                    <svg class="w-16 h-16 text-accent-green mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                    <h3 class="text-xl font-semibold mb-2 text-primary-teal">Low Motivation</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4">Routine lessons sap energy and enthusiasm.</p>
+                    <div class="w-full bg-gray-200 rounded-full h-2"><div class="bg-gradient-to-r from-primary-blue to-accent-green h-2 rounded-full w-[20%] group-hover:w-[80%] transition-all duration-500"></div></div>
+                    <p class="text-xs mt-1 text-gray-500 group-hover:hidden">Streak: 0</p>
+                    <p class="text-xs mt-1 text-accent-green hidden group-hover:block">Keep growing!</p>
+                </div>
+            </div>
+            <!-- Additional Challenges Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+                <!-- Challenge 4 -->
+                <div class="card text-center p-6" data-aos="slide-right" data-aos-delay="400">
+                    <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                    <h3 class="text-xl font-semibold mb-2 text-primary-teal">Limited Resources</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Not everyone starts with the same tools or time.</p>
+                    <svg class="w-12 h-12 mx-auto mt-4 relative progress-ring" viewBox="0 0 36 36">
+                        <circle cx="18" cy="18" r="16" stroke="var(--border)" stroke-width="2" fill="none" class="progress-ring__circle"/>
+                        <circle cx="18" cy="18" r="16" stroke="var(--accent-green)" stroke-width="2" fill="none" stroke-dasharray="100.53" stroke-dashoffset="75.4" class="progress-ring__circle group-hover:stroke-dashoffset-0 transition-all duration-700"/>
+                    </svg>
+                    <p class="text-xs mt-2 text-primary-teal">Unlock full access</p>
+                </div>
+                <!-- Challenge 5 -->
+                <div class="card text-center p-6" data-aos="slide-left" data-aos-delay="500">
+                    <svg class="w-16 h-16 text-amber-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    <h3 class="text-xl font-semibold mb-2 text-primary-teal">Time Management Struggles</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Juggling deadlines feels like an endless race.</p>
+                    <div class="mt-4 flex justify-around">
+                        <div class="w-8 h-8 bg-red-200 dark:bg-red-900/20 rounded-full"></div><div class="w-8 h-8 bg-yellow-200 dark:bg-yellow-900/20 rounded-full group-hover:bg-green-200 dark:group-hover:bg-green-900/20 transition-colors"></div><div class="w-8 h-8 bg-green-200 dark:bg-green-900/20 rounded-full"></div>
+                    </div>
+                    <p class="text-xs mt-2 text-gray-500 group-hover:hidden">Chaotic schedule</p>
+                    <p class="text-xs mt-2 text-accent-green hidden group-hover:block">Balanced flow</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resolution Section - Added teal icons, gradient cards -->
+    <section class="py-16 bg-gray-50 dark:bg-gray-900" data-aos="fade-up" data-aos-duration="800">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl sm:text-4xl font-bold text-center text-primary-dark mb-12 dark:text-gray-200" data-aos="fade-down">How We Resolve Them</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="card p-6 faq-card cursor-pointer" data-aos="slide-right" data-aos-delay="100">
+                    <svg class="w-12 h-12 text-accent-green mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <h3 class="text-xl font-semibold mb-2 text-primary-teal">Personalized Paths</h3>
+                    <p class="text-gray-600 dark:text-gray-400">AI-driven recommendations adapt to your learning style.</p>
+                </div>
+                <div class="card p-6 faq-card cursor-pointer" data-aos="slide-up" data-aos-delay="200">
+                    <svg class="w-12 h-12 text-accent-green mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                    <h3 class="text-xl font-semibold mb-2 text-primary-teal">Expert Mentorship</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Connect with teachers for real-time help and feedback.</p>
+                </div>
+                <div class="card p-6 faq-card cursor-pointer" data-aos="slide-left" data-aos-delay="300">
+                    <svg class="w-12 h-12 text-accent-green mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <h3 class="text-xl font-semibold mb-2 text-primary-teal">Global Access</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Free resources available anytime, anywhere.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learning Journey Section - Rounded steps, teal numbering, hover glow -->
+    <section class="py-16 bg-white dark:bg-gray-800" data-aos="fade-up" data-aos-duration="800">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl sm:text-4xl font-bold text-center text-primary-dark mb-12 dark:text-gray-200" data-aos="fade-down">Your Learning Journey</h2>
+            <div class="grid md:grid-cols-4 gap-6">
+                <div class="text-center p-4 step" data-aos="slide-right" data-aos-delay="100">
+                    <div class="w-12 h-12 bg-gradient-to-br from-primary-blue to-primary-teal text-white rounded-full mx-auto mb-4 flex items-center justify-center font-bold shadow-lg">1</div>
+                    <svg class="w-8 h-8 text-gray-400 mx-auto mb-2 step-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9V6a2 2 0 00-2-2H8a2 2 0 00-2 2v3m8 0V5l-6 3 6 3V9z"></path></svg>
+                    <p class="font-semibold text-primary-teal">Sign Up</p>
+                </div>
+                <div class="text-center p-4 step" data-aos="slide-up" data-aos-delay="200">
+                    <div class="w-12 h-12 bg-gradient-to-br from-primary-blue to-primary-teal text-white rounded-full mx-auto mb-4 flex items-center justify-center font-bold shadow-lg">2</div>
+                    <svg class="w-8 h-8 text-gray-400 mx-auto mb-2 step-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 00-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <p class="font-semibold text-primary-teal">Start Lessons</p>
+                </div>
+                <div class="text-center p-4 step" data-aos="slide-up" data-aos-delay="300">
+                    <div class="w-12 h-12 bg-gradient-to-br from-primary-blue to-primary-teal text-white rounded-full mx-auto mb-4 flex items-center justify-center font-bold shadow-lg">3</div>
+                    <svg class="w-8 h-8 text-gray-400 mx-auto mb-2 step-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                    <p class="font-semibold text-primary-teal">Engage & Collaborate</p>
+                </div>
+                <div class="text-center p-4 step" data-aos="slide-left" data-aos-delay="400">
+                    <div class="w-12 h-12 bg-gradient-to-br from-primary-blue to-primary-teal text-white rounded-full mx-auto mb-4 flex items-center justify-center font-bold shadow-lg">4</div>
+                    <svg class="w-8 h-8 text-gray-400 mx-auto mb-2 step-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4"></path><line x1="15.414" y1="15.414" x2="20.414" y2="20.414" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></line><line x1="18.828" y1="5.172" x2="23.828" y2="10.172" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></line></svg>
+                    <p class="font-semibold text-primary-teal">Achieve Success</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section - Rounded cards, teal icons, smooth expand on click -->
+    <section class="py-16 bg-gray-50 dark:bg-gray-900" data-aos="fade-up" data-aos-duration="800">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl sm:text-4xl font-bold text-center text-primary-dark mb-12 dark:text-gray-200" data-aos="fade-down">Got Questions?</h2>
+            <div class="space-y-4">
+                <div class="card p-6 faq-card cursor-pointer" data-aos="slide-right" data-aos-delay="100">
+                    <h3 class="text-xl font-semibold mb-2 flex items-center text-primary-teal"><svg class="w-5 h-5 mr-2 text-accent-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>Is this suitable for kids?</h3>
+                    <p class="answer hidden text-gray-600 dark:text-gray-400 mt-2">Absolutely! Our platform is designed for ages 8+, with age-appropriate content and parental controls.</p>
+                </div>
+                <div class="card p-6 faq-card cursor-pointer" data-aos="slide-up" data-aos-delay="200">
+                    <h3 class="text-xl font-semibold mb-2 flex items-center text-primary-teal"><svg class="w-5 h-5 mr-2 text-accent-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>How do I start?</h3>
+                    <p class="answer hidden text-gray-600 dark:text-gray-400 mt-2">Sign up for free, take a quick assessment, and dive into personalized courses—it's that simple!</p>
+                </div>
+                <div class="card p-6 faq-card cursor-pointer" data-aos="slide-left" data-aos-delay="300">
+                    <h3 class="text-xl font-semibold mb-2 flex items-center text-primary-teal"><svg class="w-5 h-5 mr-2 text-accent-green" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>Is it affordable?</h3>
+                    <p class="answer hidden text-gray-600 dark:text-gray-400 mt-2">Yes! Basic access is free, with premium features at just $9.99/month—empowering education for all.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learning Spaces Section - Added gradient overlay, pulse animation on images -->
+    <section class="py-16 bg-white dark:bg-gray-800 relative overflow-hidden" data-aos="fade-up" data-aos-duration="800">
+        <div class="absolute inset-0 bg-gradient-to-r from-primary-blue/10 to-primary-teal/10"></div>
+        <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl sm:text-4xl font-bold text-center text-primary-dark mb-12 dark:text-gray-200" data-aos="fade-down">Our Vibrant Learning Spaces</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80" alt="Classroom collaboration" class="rounded-xl shadow-lg w-full h-48 object-cover transition-all duration-300 hover:scale-105" data-aos="fade-up" data-aos-delay="100">
+                <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80" alt="Online tools" class="rounded-xl shadow-lg w-full h-48 object-cover transition-all duration-300 hover:scale-105" data-aos="fade-up" data-aos-delay="200">
+                <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=300&q=80" alt="Collaboration space" class="rounded-xl shadow-lg w-full h-48 object-cover transition-all duration-300 hover:scale-105" data-aos="fade-up" data-aos-delay="300">
+            </div>
+            <p class="text-center mt-8 text-lg text-gray-600 dark:text-gray-400" data-aos="fade-up" data-aos-delay="400">From virtual classrooms to collaborative hubs, experience education reimagined.</p>
+        </div>
+    </section>
+
+    <!-- Vision Section - Gradient progress bar, smooth counter animation -->
+    <section class="py-16 bg-gray-50 dark:bg-gray-900" data-aos="fade-up" data-aos-duration="800">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl sm:text-4xl font-bold text-center text-primary-dark mb-12 dark:text-gray-200" data-aos="fade-down">Our Vision for Tomorrow</h2>
+            <p class="text-center text-lg text-gray-600 dark:text-gray-400 mb-12" data-aos="fade-up" data-aos-delay="100">By 2030, we'll integrate AI tutors, expand to 1M users, and launch VR courses for immersive learning.</p>
+            <div class="flex justify-center mb-8 max-w-md mx-auto" data-aos="fade-up" data-aos-delay="200">
+                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-4"><div class="bg-gradient-to-r from-primary-blue to-accent-green h-4 rounded-full w-3/4 transition-all duration-500"></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Metrics Section - Teal counters, ring progress with hover glow -->
+    <section class="py-16 bg-white dark:bg-gray-800" data-aos="fade-up" data-aos-duration="800">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl sm:text-4xl font-bold text-center text-primary-dark mb-12 dark:text-gray-200" data-aos="fade-down">Our Impact So Far</h2>
+            <div class="grid md:grid-cols-4 gap-8 text-center">
+                <div class="card p-6" data-aos="slide-right" data-aos-delay="100">
+                    <div class="counter text-primary-blue" data-target="95">500</div>
+                    <p class="text-gray-600 dark:text-gray-400">Students Helped (%)</p>
+                </div>
+                <div class="card p-6" data-aos="slide-up" data-aos-delay="200">
+                    <div class="counter text-primary-blue" data-target="50000">70</div>
+                    <p class="text-gray-600 dark:text-gray-400">Courses Completed</p>
+                </div>
+                <div class="card p-6" data-aos="slide-up" data-aos-delay="300">
+                    <div class="counter text-primary-blue" data-target="1200">450</div>
+                    <p class="text-gray-600 dark:text-gray-400">Success Stories</p>
+                </div>
+                <div class="card p-6" data-aos="slide-left" data-aos-delay="400">
+                    <div class="w-48 h-48 mx-auto mb-4">
+                        <svg class="w-48 h-48" viewBox="0 0 36 36">
+                            <circle class="text-gray-200 dark:text-gray-700 stroke-gray-400 dark:stroke-gray-600" stroke-width="4" stroke="currentColor" fill="none" cx="18" cy="18" r="16"/>
+                            <circle class="text-primary-blue stroke-current" stroke-width="4" stroke-dasharray="100.53" stroke-dashoffset="25.13" stroke-linecap="round" fill="none" cx="18" cy="18" r="16"/>
+                            <text x="18" y="20.35" text-anchor="middle" font-size="8" fill="currentColor">75%</text>
+                        </svg>
+                    </div>
+                    <p class="text-gray-600 dark:text-gray-400">User Breakdown</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Consistent Footer (added to all pages) -->
+    <footer class="bg-gradient-to-r from-primary-blue to-primary-teal text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="text-lg font-bold mb-4">EduBridge</h3>
+                    <p class="text-gray-300">Transforming education with interactive learning and seamless navigation.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="homepage.html" class="hover:text-white transition-colors">Home</a></li>
+                        <li><a href="student-dashboard.html" class="hover:text-white transition-colors">Student Dashboard</a></li>
+                        <li><a href="Admin-dashboard.html" class="hover:text-white transition-colors">Admin Dashboard</a></li>
+                        <li><a href="about.html" class="hover:text-white transition-colors">About</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Legal</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
+                        <!-- <li><a href="homepage.html#contact" class="hover:text-white transition-colors">Contact</a></li> -->
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Newsletter</h3>
+                    <p class="text-gray-300 mb-4">Get weekly study tips.</p>
+                    <form class="flex gap-2">
+                        <input type="email" placeholder="Your email" class="flex-1 px-3 py-2 rounded-full text-black">
+                        <button class="bg-accent-green px-4 py-2 rounded-full hover:bg-green-600 transition-colors">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="flex justify-center space-x-6 mb-4">
+                <a href="#" class="text-gray-300 hover:text-white transition-colors"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="text-gray-300 hover:text-white transition-colors"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-gray-300 hover:text-white transition-colors"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="text-gray-300 hover:text-white transition-colors"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p class="text-center text-gray-400">&copy; 2025 EduBridge. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts - Tailwind config, AOS, interactions, and unified theme toggle (copied from homepage) -->
+    <script>
+        // Tailwind Config
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: { 'primary-blue': '#1E40AF', 'primary-teal': '#0D9488', 'accent-green': '#10B981' },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.6s ease-out forwards',
+                        'slide-in-left': 'slideInLeft 0.6s ease-out forwards',
+                        'slide-in-right': 'slideInRight 0.6s ease-out forwards',
+                        'count-up': 'countUp 2s ease-out forwards',
+                        'wobble': 'wobble 1s ease-in-out',
+                        'flow': 'flow 2s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeInUp: { '0%': { opacity: '0', transform: 'translateY(30px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                        slideInLeft: { '0%': { opacity: '0', transform: 'translateX(-50px)' }, '100%': { opacity: '1', transform: 'translateX(0)' } },
+                        slideInRight: { '0%': { opacity: '0', transform: 'translateX(50px)' }, '100%': { opacity: '1', transform: 'translateX(0)' } },
+                        countUp: { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                        wobble: { '0%, 100%': { transform: 'rotate(0deg)' }, '25%': { transform: 'rotate(5deg)' }, '75%': { transform: 'rotate(-5deg)' } },
+                        flow: { '0%': { transform: 'skewX(0deg)' }, '50%': { transform: 'skewX(10deg)' }, '100%': { transform: 'skewX(0deg)' } },
+                    },
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // AOS Initialization
+            AOS.init({ duration: 800, once: true, offset: 120 });
+
+            // Mobile Menu Toggle
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuClose = document.getElementById('mobile-menu-close');
+            if (mobileMenuToggle) mobileMenuToggle.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            if (mobileMenuClose) mobileMenuClose.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+
+            // FAQ Toggle
+            document.querySelectorAll('.faq-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const answer = card.querySelector('.answer');
+                    if (!answer) return;
+                    answer.classList.toggle('hidden');
+                    answer.style.maxHeight = answer.classList.contains('hidden') ? '0' : answer.scrollHeight + 'px';
+                });
+            });
+
+            // Counter Animation
+            const counters = document.querySelectorAll('.counter');
+            const animateCounters = () => {
+                counters.forEach(counter => {
+                    const target = +counter.getAttribute('data-target') || +counter.textContent || 0;
+                    const increment = Math.max(1, Math.floor(target / 100));
+                    let current = 0;
+                    const updateCounter = () => {
+                        if (current < target) {
+                            current += increment;
+                            counter.textContent = Math.ceil(current) + (target > 100 ? '' : '%');
+                            setTimeout(updateCounter, 20);
+                        } else {
+                            counter.textContent = target + (target > 100 ? '' : '%');
+                        }
+                    };
+                    updateCounter();
+                });
+            };
+            const counterObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounters();
+                        counterObserver.unobserve(entry.target);
+                    }
+                });
+            });
+            const lastSection = document.querySelector('.py-16:last-of-type') || document.querySelector('.py-16');
+            if (lastSection) counterObserver.observe(lastSection);
+
+            // Theme Toggle (same behavior as homepage)
+            const html = document.documentElement;
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                html.classList.add('dark');
+            }
+
+            const toggle = document.getElementById('theme-toggle');
+            if (toggle) {
+                let icon = toggle.querySelector('i');
+                if (!icon) {
+                    toggle.innerHTML = '<i class="fas fa-moon"></i>';
+                    icon = toggle.querySelector('i');
+                }
+
+                if (html.classList.contains('dark')) {
+                    icon.className = 'fas fa-sun';
+                } else {
+                    icon.className = 'fas fa-moon';
+                }
+
+                toggle.addEventListener('click', () => {
+                    html.classList.toggle('dark');
+                    if (html.classList.contains('dark')) {
+                        localStorage.setItem('theme', 'dark');
+                        icon.className = 'fas fa-sun';
+                    } else {
+                        localStorage.setItem('theme', 'light');
+                        icon.className = 'fas fa-moon';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        'primary-blue': '#3B82F6',
+                        'primary-teal': '#14B8A6',
+                        'accent-green': '#10B981',
+                        'primary-dark': '#1F2937',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* CSS Styles responsive for the student dashboard */
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-color: #f4f4f4;
+            --card-bg: #fff;
+            --text-color: #333;
+            --border-color: #ddd;
+            --hover-bg: #eee;
+        }
+
+        .dark {
+            --bg-color: #1a1a1a;
+            --card-bg: #2a2a2a;
+            --text-color: #ddd;
+            --border-color: #444;
+            --hover-bg: #3a3a3a;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Login Screen Styles */
+        .login-screen {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: var(--bg-color);
+        }
+
+        .login-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .dark .login-container {
+            background: #2a2a2a;
+        }
+
+        .login-title {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        .dark .login-title {
+            color: #ddd;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .dark .form-group input {
+            background: #3a3a3a;
+            border-color: #444;
+            color: #ddd;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .login-btn:hover {
+            background: #0056b3;
+        }
+
+        .login-hint {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            color: #666;
+        }
+
+        .dark .login-hint {
+            color: #aaa;
+        }
+
+        /* Dashboard Layout Styles */
+        .dashboard {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sidebar-header h1 {
+            font-size: 1.25rem;
+            color: #007bff;
+        }
+
+        #welcomeEmail {  /* Fixed: was #welcomestudentEmail (typo) */
+            font-size: 0.875rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        .dark #welcomeEmail {
+            color: #aaa;
+        }
+
+        .nav-list {
+            list-style: none;
+            flex: 1;
+            padding: 1rem 0;
+        }
+
+        .nav-list li a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--text-color);
+            text-decoration: none;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .nav-list li a:hover {
+            background: var(--hover-bg);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 0.5rem;
+            right: 1rem;
+            background: #ef4444;
+            color: white;
+            border-radius: 50%;
+            min-width: 1.25rem;
+            height: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .dark .notification-badge {
+            background: #dc2626;
+        }
+
+        .sidebar-footer {
+            padding: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .logout-btn {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            color: var(--text-color);
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background: var(--hover-bg);
+        }
+
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+        }
+
+        .logout-btn:hover {
+            background: #c82333;
+        }
+
+        /* Mobile Menu Button */
+        .mobile-header {
+            display: none;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--card-bg);
+        }
+
+        .menu-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+
+        .menu-btn:hover {
+            background: var(--hover-bg);
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+
+        .section {
+            max-width: 800px;
+        }
+
+        .section h1 {
+            margin-bottom: 1rem;
+            color: #007bff;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+
+        /* Overview Grid Styles */
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .overview-card {
+            background: var(--card-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .overview-card h3 {
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .overview-card p {
+            font-size: 2rem;
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        /* Empty State Message */
+        .empty-message {
+            text-align: center;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-color);
+        }
+
+        .dark .empty-message {
+            background: #2a2a2a;
+        }
+
+        /* List Container Styles */
+        .list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .list-item {
+            background: var(--card-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .list-item h3 {
+            margin-bottom: 0.5rem;
+            color: #007bff;
+        }
+
+        .list-item p {
+            margin-bottom: 0.5rem;
+        }
+
+        .list-item img, .list-item iframe {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+        }
+
+        .take-btn {
+            padding: 0.5rem 1rem;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .take-btn:hover {
+            background: #218838;
+        }
+
+        /* Message Form Styles */
+        .message-form {
+            margin-top: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            max-width: 500px;
+        }
+
+        .message-form textarea {
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .dark .message-form textarea {
+            background: #3a3a3a;
+            color: #ddd;
+        }
+
+        .message-form button {
+            padding: 0.75rem;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            align-self: flex-start;
+        }
+
+        .message-form button:hover {
+            background: #0056b3;
+        }
+
+        /* Results Table Styles */
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .results-table th, .results-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .results-table th {
+            background: var(--hover-bg);
+            font-weight: bold;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        /* Video Container */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Markdown Content Styles */
+        .markdown-content {
+            line-height: 1.6;
+        }
+        .markdown-content h1, .markdown-content h2, .markdown-content h3, .markdown-content h4, .markdown-content h5, .markdown-content h6 {
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            font-weight: bold;
+        }
+        .markdown-content h1 { font-size: 1.5em; }
+        .markdown-content h2 { font-size: 1.25em; }
+        .markdown-content p {
+            margin-bottom: 1em;
+        }
+        .markdown-content ul, .markdown-content ol {
+            margin-bottom: 1em;
+            padding-left: 1.5em;
+        }
+        .markdown-content li {
+            margin-bottom: 0.25em;
+        }
+        .markdown-content code {
+            background: #f4f4f4;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .dark .markdown-content code {
+            background: #374151;
+        }
+        .markdown-content pre {
+            background: #f4f4f4;
+            padding: 1em;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .dark .markdown-content pre {
+            background: #374151;
+        }
+        .markdown-content pre code {
+            background: none;
+            padding: 0;
+        }
+        .markdown-content a {
+            color: #3B82F6;
+            text-decoration: underline;
+        }
+        .markdown-content blockquote {
+            border-left: 4px solid #3B82F6;
+            margin: 1em 0;
+            padding-left: 1em;
+            font-style: italic;
+        }
+        .markdown-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin: 1em 0;
+        }
+
+        /* Modal Styles for Quiz/Exam Taker Ensures modal and submit button are properly hidden */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .timer {
+            font-size: 1.25rem;
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .modal-header button {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .dark .modal-header button {
+            color: #aaa;
+        }
+
+        #takerForm .question {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: var(--hover-bg);
+            border-radius: 4px;
+        }
+
+        #takerForm label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        #takerForm input[type="radio"], 
+        #takerForm textarea {
+            margin-right: 0.5rem;
+        }
+
+        .dark #takerForm textarea {
+            background: #3a3a3a;
+            color: #ddd;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            background: #218838;
+        }
+
+        /* Sidebar mobile overlay */
+        .sidebar-mobile-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 40;
+        }
+
+        .sidebar.open {
+            transform: translateX(0) !important;
+            box-shadow: 2px 0 8px rgba(0,0,0,0.08);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                left: 0;
+                top: 4rem;
+                height: calc(100vh - 4rem);
+                width: 75vw;
+                max-width: 320px;
+                z-index: 50;
+                background: var(--card-bg);
+                border-right: 1px solid var(--border-color);
+                transform: translateX(-100%);
+                transition: transform 0.3s;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 0.5rem;
+            }
+
+            .mobile-header {
+                display: block;
+                position: fixed;
+                top: 4rem;
+                left: 0;
+                right: 0;
+                z-index: 50;
+                background: var(--card-bg);
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .section h1 {
+                font-size: 1.5rem;
+            }
+
+            .overview-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                gap: 0.75rem;
+            }
+
+            .overview-card p {
+                font-size: 1.5rem;
+            }
+
+            .list-item img, .list-item iframe {
+                height: 150px;
+            }
+
+            .message-form {
+                max-width: 100%;
+            }
+
+            .modal-content {
+                width: 95%;
+                padding: 1rem;
+                margin: 1rem;
+            }
+
+            .results-table {
+                font-size: 0.875rem;
+            }
+
+            .results-table th, .results-table td {
+                padding: 0.5rem;
+            }
+
+            /* Responsive markdown */
+            .markdown-content pre {
+                font-size: 0.875em;
+            }
+            .markdown-content img {
+                margin: 0.5em 0;
+            }
+
+            .notification-badge {
+                top: 0.25rem;
+                right: 0.75rem;
+                min-width: 1rem;
+                height: 1rem;
+                font-size: 0.65rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 1rem;
+                margin: 1rem;
+            }
+
+            .form-group input, .login-btn {
+                padding: 0.5rem;
+                font-size: 0.875rem;
+            }
+
+            .main-content {
+                padding: 0.25rem;
+            }
+
+            .list-item {
+                padding: 0.75rem;
+            }
+
+            .list-item h3 {
+                font-size: 1rem;
+            }
+        }
+
+        /* Scrollbar Styling */
+        .sidebar::-webkit-scrollbar,
+        .list-container::-webkit-scrollbar,
+        .modal-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar::-webkit-scrollbar-track,
+        .list-container::-webkit-scrollbar-track,
+        .modal-content::-webkit-scrollbar-track {
+            background: var(--border-color);
+        }
+
+        .sidebar::-webkit-scrollbar-thumb,
+        .list-container::-webkit-scrollbar-thumb,
+        .modal-content::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 3px;
+        }
+
+        .dark ::-webkit-scrollbar-thumb {
+            background: #555;
+        }
+
+        .dark ::-webkit-scrollbar-track {
+            background: #444;
+        }
+    </style>
+</head>
+<body class="pt-16"> 
+    <!-- Navigation Navbar Fixed (inserted from homepage) -->
+    <nav class="bg-white shadow-lg dark:bg-gray-800 dark:shadow-gray-900 fixed top-0 left-0 right-0 z-50 transition-all duration-300 navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between py-4">
+                <!-- Logo Left -->
+                <div class="flex-shrink-0">
+                    <div class="flex items-center space-x-2">
+                        <svg class="w-8 h-8 text-primary-blue animate-bounce-in" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                        <span class="text-xl font-bold text-primary-dark dark:text-gray-500">EduBridge</span>
+                    </div>
+                </div>
+                <!-- Nav Links  Center (Desktop) -->
+                <div class="hidden md:flex space-x-4">
+                <a href="homepage.html" class="text-gray-600 hover:text-primary-blue dark:text-gray-300 dark:hover:text-primary-blue px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center">
+                <i class="fa-solid fa-house mr-2"></i> Home</a>
+                
+                <a href="student-lecture-page.html" class="block text-gray-700 dark:text-gray-200 px-3 py-2 rounded-md text-base font-medium transition-colors hover:text-primary-blue dark:hover:text-primary-blue flex items-center">
+                <i class="fa-solid fa-user-graduate mr-2"></i> Student Login</a>
+
+                <a href="Admin-dashboard.html" class="block text-gray-700 dark:text-gray-200 px-3 py-2 rounded-md text-base font-medium transition-colors hover:text-primary-blue dark:hover:text-primary-blue flex items-center">
+                <i class="fa-solid fa-user-shield mr-2"></i> Admin Login</a>
+
+                <a href="about.html" class="block text-gray-700 dark:text-gray-200 px-3 py-2 rounded-md text-base font-medium transition-colors hover:text-primary-blue dark:hover:text-primary-blue flex items-center">
+                <i class="fa-solid fa-circle-info mr-2"></i> About</a>
+
+                <a href="signup.html" class="block text-gray-700 dark:text-gray-200 px-3 py-2 rounded-md text-base font-medium transition-colors hover:text-primary-blue dark:hover:text-primary-blue flex items-center">
+                <i class="fa-solid fa-user-plus mr-2"></i> Signup</a>
+                </div>
+                <!-- Theme Toggle and Mobile menu button (Hamburger) Right -->
+                <div class="flex items-center space-x-2 md:space-x-4">
+                    <button id="theme-toggle" class="p-2 text-gray-600 dark:text-gray-300 hover:text-primary-blue dark:hover:text-primary-blue focus:outline-none rounded-lg transition-colors">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <div class="md:hidden flex-shrink-0">
+                        <button id="mobile-menu-toggle" class="text-gray-600 dark:text-gray-300 hover:text-primary-blue dark:hover:text-primary-blue focus:outline-none">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile nav menu -->
+        <div id="mobile-menu" class="md:hidden fixed inset-0 bg-black bg-opacity-40 z-40 hidden">
+            <div class="absolute top-0 right-0 w-3/4 max-w-xs h-full bg-white dark:bg-gray-800 shadow-lg flex flex-col p-6 space-y-4 animate-slide-in-right">
+                <button id="mobile-menu-close" class="self-end mb-4 text-gray-600 dark:text-gray-300 hover:text-primary-blue dark:hover:text-primary-blue focus:outline-none">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+                <a href="homepage.html" class="text-gray-600 hover:text-primary-blue dark:text-gray-300 dark:hover:text-primary-blue px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center">
+                     <i class="fa-solid fa-house mr-2"></i> Home</a>
+                <a href="student-lecture-page.html" class="block text-gray-700 dark:text-gray-200 px-3 py-2 rounded-md text-base font-medium transition-colors hover:text-primary-blue dark:hover:text-primary-blue flex items-center">
+                <i class="fa-solid fa-user-graduate mr-2"></i> Student Login</a>
+
+                <a href="Admin-dashboard.html" class="block text-gray-700 dark:text-gray-200 px-3 py-2 rounded-md text-base font-medium transition-colors hover:text-primary-blue dark:hover:text-primary-blue flex items-center">
+                <i class="fa-solid fa-user-shield mr-2"></i> Admin Login</a>
+
+                <a href="about.html" class="block text-gray-700 dark:text-gray-200 px-3 py-2 rounded-md text-base font-medium transition-colors hover:text-primary-blue dark:hover:text-primary-blue flex items-center">
+                <i class="fa-solid fa-circle-info mr-2"></i> About</a>
+
+                <a href="signup.html" class="block text-gray-700 dark:text-gray-200 px-3 py-2 rounded-md text-base font-medium transition-colors hover:text-primary-blue dark:hover:text-primary-blue flex items-center">
+                <i class="fa-solid fa-user-plus mr-2"></i> Signup</a>
+            </div>
+        </div>
+    </nav>
+    <!-- Sidebar mobile overlay -->
+    <div id="sidebarOverlay" class="sidebar-mobile-overlay"></div>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-screen">
+        <div class="login-container">
+            <h2 class="login-title">Student Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="studentEmail">Email</label>
+                    <input type="email" id="studentEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="studentPassword">Password</label>
+                    <input type="password" id="studentPassword" required>
+                </div>
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+            <!-- <p class="login-hint">Default: student@example.com / Student123!</p> -->
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" class="dashboard hidden">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div>
+                    <h1>Student Dashboard</h1>
+                    <p id="welcomeEmail"></p>
+                </div>
+                <!-- Sidebar Close Button (only visible on mobile) -->
+                <button id="sidebarClose" class="menu-btn" style="display: none;" aria-label="Close sidebar">
+                    ×
+                </button>
+            </div>
+            <ul class="nav-list">
+                <li><a href="#home">🏠 Home</a></li>
+                <li><a href="#lectures">📚 Lectures<span id="badge-lectures" class="notification-badge hidden"></span></a></li>
+                <li><a href="#announcements">📢 Announcements<span id="badge-announcements" class="notification-badge hidden"></span></a></li>
+                <li><a href="#live-sessions">📺 Live Sessions</a></li>
+                <li><a href="#quizzes">📋 Quizzes<span id="badge-quizzes" class="notification-badge hidden"></span></a></li>
+                <li><a href="#exams">📄 Exams<span id="badge-exams" class="notification-badge hidden"></span></a></li>
+                <li><a href="#results">📊 Results</a></li>
+                <li><a href="#messages">💬 Messages<span id="badge-messages" class="notification-badge hidden"></span></a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <button onclick="logout()" class="logout-btn">🚪 Logout</button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Mobile Header with Toggle Button -->
+            <div class="mobile-header">
+                <button id="mobileMenuBtn" class="menu-btn">☰</button>
+            </div>
+
+            <!-- Home Section -->
+            <section id="home" class="section active">
+                <h1>Welcome to Your Dashboard</h1>
+                <div class="overview-grid">
+                    <div class="overview-card">
+                        <h3>Lectures</h3>
+                        <p id="lectureCount">10</p>
+                    </div>
+                    <div class="overview-card">
+                        <h3>Quizzes</h3>
+                        <p id="quizCount">50</p>
+                    </div>
+                    <div class="overview-card">
+                        <h3>Exams</h3>
+                        <p id="examCount">3</p>
+                    </div>
+                </div>
+                <p>View personalized content assigned to you by your lecturer.</p>
+                <div id="homeEmptyMessage" class="empty-message hidden"></div>
+            </section>
+
+            <!-- Lectures Section -->
+            <section id="lectures" class="section hidden">
+                <h1>Your Lectures</h1>
+                <div id="lecturesList" class="list-container"></div>
+            </section>
+
+            <!-- Announcements Section -->
+            <section id="announcements" class="section hidden">
+                <h1>Your Announcements</h1>
+                <div id="announcementsList" class="list-container"></div>
+            </section>
+
+            <!-- Live Sessions Section -->
+            <section id="live-sessions" class="section hidden">
+                <h1>Your Live Sessions</h1>
+                <div id="liveSessionsList" class="list-container"></div>
+            </section>
+
+            <!-- Quizzes Section -->
+            <section id="quizzes" class="section hidden">
+                <h1>Your Quizzes</h1>
+                <div id="quizzesList" class="list-container"></div>
+            </section>
+
+            <!-- Exams Section -->
+            <section id="exams" class="section hidden">
+                <h1>Your Exams</h1>
+                <div id="examsList" class="list-container"></div>
+            </section>
+
+            <!-- Results Section -->
+            <section id="results" class="section hidden">
+                <h1>Your Results</h1>
+                <div id="resultsList" class="list-container"></div>
+            </section>
+
+            <!-- Messages Section -->
+            <section id="messages" class="section hidden">
+                <h1>Questions to Lecturer</h1>
+                <div id="messagesList" class="list-container"></div>
+                <form id="messageForm" class="message-form">
+                    <textarea id="messageText" placeholder="Type your question here and send to the lecturer..." required></textarea>
+                    <button type="submit">Send Question</button>
+                </form>
+            </section>
+
+            <!-- Quiz/Exam Taker Modal Hidden by default; contains form and submit button -->
+            <div id="quizTaker">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 id="quizTitle"></h2>
+                        <div id="timer" class="timer"></div>
+                        <!-- Close button for modal -->
+                        <button type="button" onclick="closeQuizTaker()">×</button>
+                    </div>
+                    <form id="takerForm"></form>
+                    <!-- Submit button - only visible when modal is open -->
+                    <button type="button" id="submitBtn" onclick="submitQuiz()" class="submit-btn">Submit</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+
+    <footer class="bg-gradient-to-r from-primary-blue to-primary-teal text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="text-lg font-bold mb-4">EduBridge</h3>
+                    <p class="text-gray-300">Transforming education with interactive learning and seamless navigation.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="homepage.html" class="hover:text-white transition-colors">Home</a></li>
+                        <li><a href="student-dashboard.html" class="hover:text-white transition-colors">Student Dashboard</a></li>
+                        <li><a href="Admin-dashboard.html" class="hover:text-white transition-colors">Admin Dashboard</a></li>
+                        <li><a href="about.html" class="hover:text-white transition-colors">About</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Legal</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
+                        <!-- <li><a href="homepage.html#contact" class="hover:text-white transition-colors">Contact</a></li> -->
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Newsletter</h3>
+                    <p class="text-gray-300 mb-4">Get weekly study tips.</p>
+                    <form class="flex gap-2">
+                        <input type="email" placeholder="Your email" class="flex-1 px-3 py-2 rounded-full text-black">
+                        <button class="bg-accent-green px-4 py-2 rounded-full hover:bg-green-600 transition-colors">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="flex justify-center space-x-6 mb-4">
+                <a href="#" class="text-gray-300 hover:text-white transition-colors"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="text-gray-300 hover:text-white transition-colors"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-gray-300 hover:text-white transition-colors"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="text-gray-300 hover:text-white transition-colors"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p class="text-center text-gray-400">&copy; 2025 EduBridge. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar Mobile Menu Toggle (for consistency across pages)
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuClose = document.getElementById('mobile-menu-close');
+            if (mobileMenuToggle) {
+                mobileMenuToggle.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+            if (mobileMenuClose) {
+                mobileMenuClose.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            }
+
+            // Theme Toggle
+            const html = document.documentElement;
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                html.classList.add('dark');
+            }
+
+            const toggle = document.getElementById('theme-toggle');
+            const icon = toggle.querySelector('i');
+
+            if (html.classList.contains('dark')) {
+                icon.className = 'fas fa-sun';
+            } else {
+                icon.className = 'fas fa-moon';
+            }
+
+            toggle.addEventListener('click', () => {
+                html.classList.toggle('dark');
+                if (html.classList.contains('dark')) {
+                    localStorage.setItem('theme', 'dark');
+                    icon.className = 'fas fa-sun';
+                } else {
+                    localStorage.setItem('theme', 'light');
+                    icon.className = 'fas fa-moon';
+                }
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Responsive Sidebar Toggle Logic (single toggle button)
+            var sidebar = document.querySelector('.sidebar');
+            var sidebarClose = document.getElementById('sidebarClose');
+            var sidebarOverlay = document.getElementById('sidebarOverlay');
+            var mobileMenuBtn = document.getElementById('mobileMenuBtn');
+
+            function updateSidebarToggleVisibility() {
+                if (window.innerWidth <= 768) {
+                    if (sidebarClose) sidebarClose.style.display = 'block';
+                } else {
+                    if (sidebarClose) sidebarClose.style.display = 'none';
+                    sidebar.classList.remove('open');
+                    sidebarOverlay.style.display = 'none';
+                }
+            }
+
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    sidebar.classList.add('open');
+                    sidebarOverlay.style.display = 'block';
+                });
+            }
+            if (sidebarClose) {
+                sidebarClose.addEventListener('click', function() {
+                    sidebar.classList.remove('open');
+                    sidebarOverlay.style.display = 'none';
+                });
+            }
+            sidebarOverlay.addEventListener('click', function() {
+                sidebar.classList.remove('open');
+                sidebarOverlay.style.display = 'none';
+            });
+
+            window.addEventListener('resize', updateSidebarToggleVisibility);
+            updateSidebarToggleVisibility();
+
+            // JavaScript Code - Handles login, data loading, rendering, and modal interactions
+
+            // Hardcoded student credentials (default as per requirements)
+            const STUDENT_CREDENTIALS = {
+                userName: 'student',
+                email: 'student@example.com',
+                password: 'Student123!'
+            };
+
+            // LocalStorage keys (matching admin dashboard)
+            const LECTURES_KEY = 'lectures';
+            const QUIZZES_KEY = 'quizzes';
+            const EXAMS_KEY = 'exams';
+            const COMMENTS_KEY = 'comments'; // Messages/questions from students
+            const QUIZ_RESULTS_KEY = 'quizResults';
+            const EXAM_RESULTS_KEY = 'examResults';
+            const LIVE_SESSION_KEY = 'liveSession';
+            const ANNOUNCEMENT_KEY = 'announcement';
+
+            let currentStudentEmail = '';
+            let currentStudentName = STUDENT_CREDENTIALS.userName;
+            let lectures = [];
+            let quizzes = [];
+            let exams = [];
+            let comments = [];
+            let quizResults = [];
+            let examResults = [];
+            let currentLiveSession = null;
+            let currentAnnouncementObj = { content: '', timestamp: 0 };
+
+            // Seen data
+            let seenLectures = [];
+            let seenQuizzes = [];
+            let seenExams = [];
+            let seenAnnouncementTimestamp = 0;
+
+            // DOM elements - Cached for performance
+            const loginScreen = document.getElementById('loginScreen');
+            const dashboard = document.getElementById('dashboard');
+            const loginForm = document.getElementById('loginForm');
+
+            // Load all data from localStorage - Fetches shared data from admin
+            function loadData() {
+                lectures = JSON.parse(localStorage.getItem(LECTURES_KEY) || '[]');
+                quizzes = JSON.parse(localStorage.getItem(QUIZZES_KEY) || '[]');
+                exams = JSON.parse(localStorage.getItem(EXAMS_KEY) || '[]');
+                comments = JSON.parse(localStorage.getItem(COMMENTS_KEY) || '[]');
+                quizResults = JSON.parse(localStorage.getItem(QUIZ_RESULTS_KEY) || '[]');
+                examResults = JSON.parse(localStorage.getItem(EXAM_RESULTS_KEY) || '[]');
+                currentLiveSession = JSON.parse(localStorage.getItem(LIVE_SESSION_KEY) || '{}');
+                const annObj = JSON.parse(localStorage.getItem(ANNOUNCEMENT_KEY) || '{}');
+                currentAnnouncementObj = { content: annObj.content || '', timestamp: annObj.timestamp || 0 };
+            }
+
+            // Load seen data
+            function loadSeenData() {
+                seenLectures = JSON.parse(localStorage.getItem(`seenLectures_${currentStudentEmail}`) || '[]');
+                seenQuizzes = JSON.parse(localStorage.getItem(`seenQuizzes_${currentStudentEmail}`) || '[]');
+                seenExams = JSON.parse(localStorage.getItem(`seenExams_${currentStudentEmail}`) || '[]');
+                seenAnnouncementTimestamp = parseInt(localStorage.getItem(`seenAnnouncement_${currentStudentEmail}`) || '0');
+            }
+
+            // Filter data for current student - Shows items if no assignedStudents or email is included
+            function filterForStudent(items) {
+                return items.filter(item => !item.assignedStudents || item.assignedStudents.includes(currentStudentEmail));
+            }
+
+            // Update badges
+            function updateBadges() {
+                const studentLectures = filterForStudent(lectures);
+                const unreadLectures = studentLectures.filter(l => !seenLectures.includes(l.id)).length;
+                const badgeLectures = document.getElementById('badge-lectures');
+                if (badgeLectures) {
+                    badgeLectures.textContent = unreadLectures;
+                    badgeLectures.classList.toggle('hidden', unreadLectures === 0);
+                }
+
+                const studentQuizzes = filterForStudent(quizzes);
+                const unreadQuizzes = studentQuizzes.filter(q => !seenQuizzes.includes(q.id)).length;
+                const badgeQuizzes = document.getElementById('badge-quizzes');
+                if (badgeQuizzes) {
+                    badgeQuizzes.textContent = unreadQuizzes;
+                    badgeQuizzes.classList.toggle('hidden', unreadQuizzes === 0);
+                }
+
+                const studentExams = filterForStudent(exams);
+                const unreadExams = studentExams.filter(e => !seenExams.includes(e.id)).length;
+                const badgeExams = document.getElementById('badge-exams');
+                if (badgeExams) {
+                    badgeExams.textContent = unreadExams;
+                    badgeExams.classList.toggle('hidden', unreadExams === 0);
+                }
+
+                const unreadAnn = currentAnnouncementObj.timestamp > seenAnnouncementTimestamp ? 1 : 0;
+                const badgeAnn = document.getElementById('badge-announcements');
+                if (badgeAnn) {
+                    badgeAnn.textContent = unreadAnn;
+                    badgeAnn.classList.toggle('hidden', unreadAnn === 0);
+                }
+
+                const studentComments = comments.filter(c => c.studentEmail === currentStudentEmail);
+                const unreadReplies = studentComments.filter(c => c.reply && !c.reply.seen).length;
+                const badgeMessages = document.getElementById('badge-messages');
+                if (badgeMessages) {
+                    badgeMessages.textContent = unreadReplies;
+                    badgeMessages.classList.toggle('hidden', unreadReplies === 0);
+                }
+            }
+
+            // Update seen for a type
+            function updateSeen(type, ids) {
+                const key = `seen${type.charAt(0).toUpperCase() + type.slice(1)}s_${currentStudentEmail}`;
+                localStorage.setItem(key, JSON.stringify(ids));
+                if (type === 'lectures') seenLectures = ids;
+                if (type === 'quizzes') seenQuizzes = ids;
+                if (type === 'exams') seenExams = ids;
+                updateBadges();
+            }
+
+            // Update dashboard counts - Displays filtered counts on home section
+            function updateDashboardCounts() {
+                const studentLectures = filterForStudent(lectures);
+                const studentQuizzes = filterForStudent(quizzes);
+                const studentExams = filterForStudent(exams);
+                document.getElementById('lectureCount').textContent = studentLectures.length;
+                document.getElementById('quizCount').textContent = studentQuizzes.length;
+                document.getElementById('examCount').textContent = studentExams.length;
+
+                // Handle empty message for quizzes and exams
+                const emptyMessage = document.getElementById('homeEmptyMessage');
+                if (studentQuizzes.length === 0 && studentExams.length === 0) {
+                    emptyMessage.textContent = 'No quizzes or exams available yet. Please wait for your lecturer to upload them.';
+                    emptyMessage.classList.remove('hidden');
+                } else {
+                    emptyMessage.classList.add('hidden');
+                }
+                updateBadges();
+            }
+
+            // Render filtered lectures list - Populates lectures section with assigned lectures
+            function renderLectures() {
+                const studentLectures = filterForStudent(lectures);
+                const container = document.getElementById('lecturesList');
+                if (studentLectures.length === 0) {
+                    container.innerHTML = '<p>No lectures assigned to you yet.</p>';
+                    return;
+                }
+                container.innerHTML = studentLectures.map(lecture => `
+                    <div class="list-item">
+                        <h3>${lecture.title}</h3>
+                        <div class="markdown-content">${marked.parse(lecture.content || lecture.description || '')}</div>
+                        ${lecture.image ? `<img src="${lecture.image}" alt="${lecture.title}">` : ''}
+                        ${lecture.video ? `<div class="video-container">${lecture.video}</div>` : ''}
+                    </div>
+                `).join('');
+            }
+
+            // Render announcements - Displays global announcement if available
+            function renderAnnouncements() {
+                const container = document.getElementById('announcementsList');
+                if (!currentAnnouncementObj.content) {
+                    container.innerHTML = '<p>No announcements at the moment.</p>';
+                    return;
+                }
+                container.innerHTML = `
+                    <div class="list-item">
+                        <div class="markdown-content">${marked.parse(currentAnnouncementObj.content)}</div>
+                    </div>
+                `;
+            }
+
+            // Render live sessions - Shows active session if assigned or global
+            function renderLiveSessions() {
+                const session = currentLiveSession;
+                const container = document.getElementById('liveSessionsList');
+                if (!session || !session.active || (session.assignedStudents && !session.assignedStudents.includes(currentStudentEmail))) {
+                    container.innerHTML = '<p>No live sessions assigned to you.</p>';
+                    return;
+                }
+                container.innerHTML = `
+                    <div class="list-item">
+                        <h3>${session.title}</h3>
+                        <p><a href="${session.link}" target="_blank">Join Session</a></p>
+                        ${session.notes ? `<div class="markdown-content">${marked.parse(session.notes)}</div>` : ''}
+                    </div>
+                `;
+            }
+
+            // Render filtered quizzes list - Populates quizzes section with take buttons
+            function renderQuizzes() {
+                const studentQuizzes = filterForStudent(quizzes);
+                const container = document.getElementById('quizzesList');
+                if (studentQuizzes.length === 0) {
+                    container.innerHTML = '<p>No quizzes assigned to you.</p>';
+                    return;
+                }
+                container.innerHTML = studentQuizzes.map(quiz => `
+                    <div class="list-item">
+                        <h3>${quiz.title}</h3>
+                        <p>Time Limit: ${quiz.timeLimit} min | Questions: ${quiz.questions.length}</p>
+                        <button class="take-btn" onclick="startQuiz(${quiz.id})">Take Quiz</button>
+                    </div>
+                `).join('');
+            }
+
+            // Render filtered exams list - Populates exams section with take buttons
+            function renderExams() {
+                const studentExams = filterForStudent(exams);
+                const container = document.getElementById('examsList');
+                if (studentExams.length === 0) {
+                    container.innerHTML = '<p>No exams assigned to you.</p>';
+                    return;
+                }
+                container.innerHTML = studentExams.map(exam => `
+                    <div class="list-item">
+                        <h3>${exam.title}</h3>
+                        <p>Time Limit: ${exam.timeLimit} min | Questions: ${exam.questions.length}</p>
+                        <button class="take-btn" onclick="startExam(${exam.id})">Take Exam</button>
+                    </div>
+                `).join('');
+            }
+
+            // Render student results - Displays quiz and exam results in tables
+            function renderResults() {
+                const studentQuizResults = quizResults.filter(r => r.studentEmail === currentStudentEmail);
+                const studentExamResults = examResults.filter(r => r.studentEmail === currentStudentEmail);
+                const container = document.getElementById('resultsList');
+                if (studentQuizResults.length === 0 && studentExamResults.length === 0) {
+                    container.innerHTML = '<p>No results yet.</p>';
+                    return;
+                }
+                let html = '';
+                if (studentQuizResults.length > 0) {
+                    html += '<h2>Quiz Results</h2><div class="table-wrapper"><table class="results-table"><tr><th>Quiz</th><th>Score/Total</th><th>Date</th></tr>';
+                    studentQuizResults.forEach(r => {
+                        const quiz = quizzes.find(q => q.id === r.quizId);
+                        html += `<tr><td>${quiz ? quiz.title : 'Unknown'}</td><td>${r.score}/${r.total}</td><td>${new Date(r.timestamp).toLocaleDateString()}</td></tr>`;
+                    });
+                    html += '</table></div>';
+                }
+                if (studentExamResults.length > 0) {
+                    html += '<h2>Exam Results</h2><div class="table-wrapper"><table class="results-table"><tr><th>Exam</th><th>Score/Total</th><th>Date</th></tr>';
+                    studentExamResults.forEach(r => {
+                        const exam = exams.find(e => e.id === r.examId);
+                        html += `<tr><td>${exam ? exam.title : 'Unknown'}</td><td>${r.score}/${r.total}</td><td>${new Date(r.timestamp).toLocaleDateString()}</td></tr>`;
+                    });
+                    html += '</table></div>';
+                }
+                container.innerHTML = html;
+            }
+
+            // Render student messages - Shows sent questions and lecturer replies
+            function renderMessages() {
+                const studentComments = comments.filter(c => c.studentEmail === currentStudentEmail);
+                const container = document.getElementById('messagesList');
+                if (studentComments.length === 0) {
+                    container.innerHTML = '<p>No questions sent yet.</p>';
+                    return;
+                }
+                container.innerHTML = studentComments.map(c => `
+                    <div class="list-item">
+                        <p><strong>Your Question:</strong> ${c.text}</p>
+                        <small>${c.time}</small>
+                        ${c.reply ? `
+                            <div style="margin-top: 0.5rem; padding: 0.5rem; background: #e7f3ff;">
+                                <p><strong>Lecturer Reply:</strong> ${c.reply.text}</p>
+                                <small>${c.reply.time}</small>
+                            </div>
+                        ` : '<p>Awaiting reply from lecturer...</p>'}
+                    </div>
+                `).join('');
+            }
+
+            // Send message/question to lecturer - Adds to localStorage and refreshes list
+            if (document.getElementById('messageForm')) {
+                document.getElementById('messageForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const text = document.getElementById('messageText').value.trim();
+                    if (text) {
+                        const newComment = {
+                            id: Date.now(),
+                            text,
+                            time: new Date().toLocaleString(),
+                            studentEmail: currentStudentEmail,
+                            reply: null
+                        };
+                        comments.push(newComment);
+                        localStorage.setItem(COMMENTS_KEY, JSON.stringify(comments));
+                        document.getElementById('messageText').value = '';
+                        renderMessages();
+                        loadData(); // Reload to sync
+                        updateBadges();
+                        alert('Question sent to lecturer!');
+                    }
+                });
+            }
+
+            // Hash-based router - Handles navigation between sections using URL hash
+            function initRouter() {
+                const hash = location.hash.slice(1) || 'home';
+                showSection(hash);
+                window.addEventListener('hashchange', () => {
+                    const newHash = location.hash.slice(1) || 'home';
+                    showSection(newHash);
+                    // Close sidebar on navigation for mobile
+                    if (window.innerWidth <= 768) {
+                        sidebar.classList.remove('open');
+                    }
+                });
+
+                // Add click listeners to sidebar links to ensure navigation works smoothly
+                document.querySelectorAll('.nav-list a').forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const hash = link.getAttribute('href').slice(1);
+                        location.hash = hash;
+                        // Close sidebar on mobile
+                        if (window.innerWidth <= 768) {
+                            sidebar.classList.remove('open');
+                            sidebarOverlay.style.display = 'none';
+                        }
+                    });
+                });
+            }
+
+            // Show section - Hides all sections and shows the selected one, then renders content
+            function showSection(sectionId) {
+                document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    section.classList.remove('hidden');
+                }
+                // Render specific data based on section
+                const studentLectures = filterForStudent(lectures);
+                const studentQuizzes = filterForStudent(quizzes);
+                const studentExams = filterForStudent(exams);
+                switch (sectionId) {
+                    case 'lectures':
+                        renderLectures();
+                        updateSeen('lectures', studentLectures.map(l => l.id));
+                        break;
+                    case 'announcements':
+                        renderAnnouncements();
+                        if (currentAnnouncementObj.content) {
+                            seenAnnouncementTimestamp = currentAnnouncementObj.timestamp;
+                            localStorage.setItem(`seenAnnouncement_${currentStudentEmail}`, currentAnnouncementObj.timestamp.toString());
+                        }
+                        break;
+                    case 'live-sessions':
+                        renderLiveSessions();
+                        break;
+                    case 'quizzes':
+                        renderQuizzes();
+                        updateSeen('quizzes', studentQuizzes.map(q => q.id));
+                        break;
+                    case 'exams':
+                        renderExams();
+                        updateSeen('exams', studentExams.map(e => e.id));
+                        break;
+                    case 'results':
+                        renderResults();
+                        break;
+                    case 'messages':
+                        renderMessages();
+                        const studentComments = comments.filter(c => c.studentEmail === currentStudentEmail);
+                        studentComments.forEach(c => {
+                            if (c.reply && !c.reply.seen) {
+                                c.reply.seen = true;
+                            }
+                        });
+                        localStorage.setItem(COMMENTS_KEY, JSON.stringify(comments));
+                        break;
+                    default:
+                        updateDashboardCounts();
+                        break;
+                }
+                updateBadges();
+            }
+
+            // Quiz/Exam Taker Functions - Manages modal opening, submission, and closing
+
+            let currentTaker = { type: '', id: 0, timeLimit: 0, startTime: 0, interval: null, questions: [] };
+
+            // Start quiz - Checks assignment and opens modal with quiz form
+            window.startQuiz = function(quizId) {
+                const quiz = quizzes.find(q => q.id === quizId && (!q.assignedStudents || q.assignedStudents.includes(currentStudentEmail)));
+                if (!quiz) return alert('Quiz not assigned to you.');
+                startTaker('quiz', quizId, quiz.title, quiz.timeLimit, quiz.questions);
+            }
+
+            // Start exam - Checks assignment and opens modal with exam form
+            window.startExam = function(examId) {
+                const exam = exams.find(e => e.id === examId && (!e.assignedStudents || e.assignedStudents.includes(currentStudentEmail)));
+                if (!exam) return alert('Exam not assigned to you.');
+                startTaker('exam', examId, exam.title, exam.timeLimit, exam.questions);
+            }
+
+            // Start taker - Populates modal form with questions and starts timer if needed
+            function startTaker(type, id, title, timeLimit, questions) {
+                currentTaker = { type, id, timeLimit, startTime: Date.now(), interval: null, questions };
+                document.getElementById('quizTitle').textContent = title;
+                const form = document.getElementById('takerForm');
+                form.innerHTML = ''; // Clear previous form
+                questions.forEach((q, index) => {
+                    const qDiv = document.createElement('div');
+                    qDiv.className = 'question';
+                    qDiv.innerHTML = `
+                        <label>Q${index + 1}: ${q.question}</label>
+                        ${q.type === 'objective' ? 
+                            q.options.map((opt, oIndex) => 
+                                `<label><input type="radio" name="q${index}" value="${String.fromCharCode(65 + oIndex)}"> ${String.fromCharCode(65 + oIndex)}. ${opt}</label><br>`
+                            ).join('') :
+                            `<textarea name="q${index}" rows="3" placeholder="Your answer..."></textarea>`
+                        }
+                    `;
+                    form.appendChild(qDiv);
+                });
+                // Show modal - This makes the entire modal (including submit button) visible
+                document.getElementById('quizTaker').classList.remove('hidden');
+                document.body.style.overflow = 'hidden'; // Prevent background scroll
+                // Start timer if time limit > 0
+                if (timeLimit > 0) {
+                    currentTaker.interval = setInterval(updateTimer, 1000);
+                }
+            }
+
+            // Update timer - Runs every second to countdown and auto-submit if time up
+            function updateTimer() {
+                const elapsed = Math.floor((Date.now() - currentTaker.startTime) / 1000);
+                const remaining = currentTaker.timeLimit * 60 - elapsed;
+                if (remaining <= 0) {
+                    submitQuiz(true); // Auto-submit on timeout
+                    return;
+                }
+                document.getElementById('timer').textContent = `Time: ${Math.floor(remaining / 60)}:${(remaining % 60).toString().padStart(2, '0')}`;
+            }
+
+            // Close quiz taker - Hides the modal (and thus the submit button) and clears timer
+            window.closeQuizTaker = function() {
+                if (currentTaker.interval) clearInterval(currentTaker.interval);
+                // Hide modal - This ensures submit button is no longer visible
+                document.getElementById('quizTaker').classList.add('hidden');
+                document.body.style.overflow = 'auto'; // Restore scroll
+                currentTaker = { type: '', id: 0, timeLimit: 0, startTime: 0, interval: null, questions: [] }; // Reset state
+            }
+
+            // Submit quiz - Processes answers, calculates score, saves result, shows alert, and hides modal
+            window.submitQuiz = function(auto = false) {
+                if (auto) {
+                    if (confirm('Time up! Submit now?')) {
+                        // Proceed with submission
+                    } else {
+                        closeQuizTaker(); // Stop timer and hide if canceled
+                        return;
+                    }
+                }
+                const form = document.getElementById('takerForm');
+                const answers = [];
+                let totalPoints = 0;
+                currentTaker.questions.forEach((q, index) => {
+                    const inputs = form.querySelectorAll(`[name="q${index}"]`);
+                    let answer = '';
+                    if (q.type === 'objective') {
+                        const selected = Array.from(inputs).find(r => r.checked);
+                        answer = selected ? selected.value : '';
+                    } else {
+                        answer = inputs[0].value || '';
+                    }
+                    answers.push({ questionIndex: index, answer });
+                    totalPoints += q.points || 1;
+                });
+                let score = 0;
+                // Simple scoring: exact match for descriptive, option for objective
+                currentTaker.questions.forEach((q, index) => {
+                    const userAnswer = answers[index].answer.toLowerCase().trim();
+                    const correct = q.correctAnswer.toLowerCase().trim();
+                    if (q.type === 'objective') {
+                        if (userAnswer === correct) score += q.points || 1;
+                    } else {
+                        if (userAnswer === correct) score += q.points || 1;
+                    }
+                });
+                const result = {
+                    studentEmail: currentStudentEmail,
+                    [currentTaker.type === 'quiz' ? 'quizId' : 'examId']: currentTaker.id,
+                    score,
+                    total: totalPoints,
+                    timestamp: new Date().toISOString(),
+                    answers
+                };
+                if (currentTaker.type === 'quiz') {
+                    quizResults.push(result);
+                    localStorage.setItem(QUIZ_RESULTS_KEY, JSON.stringify(quizResults));
+                } else {
+                    examResults.push(result);
+                    localStorage.setItem(EXAM_RESULTS_KEY, JSON.stringify(examResults));
+                }
+                alert(`Submitted! Score: ${score}/${totalPoints}`);
+                // Hide modal after successful submission - Ensures button disappears
+                closeQuizTaker();
+                loadData();
+                updateBadges();
+            }
+
+            // Login handling - Validates credentials and shows dashboard
+            if (loginForm) {
+                loginForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const email = document.getElementById('studentEmail').value.trim();
+                    const password = document.getElementById('studentPassword').value;
+                    if (email === STUDENT_CREDENTIALS.email && password === STUDENT_CREDENTIALS.password) {
+                        currentStudentEmail = email;
+                        currentStudentName = STUDENT_CREDENTIALS.userName;
+                        sessionStorage.setItem('studentLoggedIn', 'true');
+                        sessionStorage.setItem('studentEmail', email);
+                        sessionStorage.setItem('studentName', currentStudentName);
+                        loginScreen.classList.add('hidden');
+                        dashboard.classList.remove('hidden');
+                        document.getElementById('welcomeEmail').textContent = `Welcome, ${currentStudentName}`;
+                        loadData();
+                        loadSeenData();
+                        initRouter();
+                        showSection('home');
+                    } else {
+                        alert('Invalid credentials. Use default: student@example.com / Student123!');
+                    }
+                });
+            }
+
+            // Check login on load - Auto-login if session exists
+            if (sessionStorage.getItem('studentLoggedIn') === 'true') {
+                currentStudentEmail = sessionStorage.getItem('studentEmail');
+                currentStudentName = sessionStorage.getItem('studentName') || STUDENT_CREDENTIALS.userName;
+                document.getElementById('welcomeEmail').textContent = `Welcome, ${currentStudentName}`;
+                loginScreen.classList.add('hidden');
+                dashboard.classList.remove('hidden');
+                loadData();
+                loadSeenData();
+                initRouter();
+                showSection('home');
+            }
+
+            // Listen for storage changes - Syncs data updates from admin in real-time (multi-tab support)
+            window.addEventListener('storage', (e) => {
+                if (e.key && [LECTURES_KEY, QUIZZES_KEY, EXAMS_KEY, COMMENTS_KEY, QUIZ_RESULTS_KEY, EXAM_RESULTS_KEY, LIVE_SESSION_KEY, ANNOUNCEMENT_KEY].includes(e.key)) {
+                    loadData();
+                    loadSeenData();
+                    const currentSection = location.hash.slice(1) || 'home';
+                    showSection(currentSection);
+                }
+            });
+
+            // Logout - Clears session and returns to login screen
+            window.logout = function() {
+                sessionStorage.removeItem('studentLoggedIn');
+                sessionStorage.removeItem('studentEmail');
+                sessionStorage.removeItem('studentName');
+                dashboard.classList.add('hidden');
+                loginScreen.classList.remove('hidden');
+                if (loginForm) loginForm.reset();
+                location.hash = '';
+                document.getElementById('welcomeEmail').textContent = '';
+                sidebar.classList.remove('open');
+            }
+        });
+    </script>
+</body>
+</html>

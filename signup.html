@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - EduBridge</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        'primary-blue': '#3B82F6',
+                        'primary-teal': '#14B8A6',
+                        'accent-green': '#10B981',
+                        'primary-dark': '#1e40af',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .dark body {
+            background: #111827;
+        }
+
+        .signup-container {
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .dark .signup-container {
+            background-color: rgba(55, 65, 81, 0.5);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo-section {
+            margin-bottom: 30px;
+        }
+
+        .logo-icon {
+            font-size: 3rem;
+            color: rgba(0, 0, 0, 0.747); /* the “inside” of the icon */
+            position: relative;
+            display: inline-block;
+            text-shadow:
+            0 0 2px rgb(2, 2, 252),  /* blue outline */
+            2px 0 0 blue,
+            2px 0 0 blue,
+            0 2px 0 blue,
+            0 -2px 0 blue,
+            -2px 0 0 blue,
+            0 2px 0 blue;
+            margin-bottom: 10px;
+        }
+
+        .platform-name {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .dark .platform-name {
+            color: #f9fafb;
+        }
+
+        .social-options {
+            margin-bottom: 30px;
+        }
+
+        .social-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .google-btn {
+            background: #db4437;
+            color: white;
+        }
+
+        .facebook-btn {
+            background: #3b5998;
+            color: white;
+        }
+
+        .email-btn {
+            background: white;
+            color: #333;
+            border: 2px solid #ddd;
+        }
+
+        .dark .email-btn {
+            background: #374151;
+            color: #f9fafb;
+            border-color: #4b5563;
+        }
+
+        .separator {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            color: #999;
+        }
+
+        .dark .separator {
+            color: #9ca3af;
+        }
+
+        .separator::before,
+        .separator::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #ddd;
+        }
+
+        .dark .separator::before,
+        .dark .separator::after {
+            background: #4b5563;
+        }
+
+        .separator span {
+            padding: 0 15px;
+            font-size: 0.9rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .dark .form-group label {
+            color: #f9fafb;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.2s ease;
+            background: white;
+            color: #333;
+        }
+
+        .dark .form-group input {
+            border-color: #4b5563;
+            background: #1f2937;
+            color: #f9fafb;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .signup-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .signup-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .social-icons {
+            margin: 30px 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .social-icon {
+            font-size: 1.5rem;
+            color: #667eea;
+            cursor: pointer;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .social-icon:hover {
+            color: #764ba2;
+            transform: scale(1.1);
+        }
+
+        .footer-links {
+            margin-top: 30px;
+            font-size: 0.9rem;
+        }
+
+        .dark .footer-links p {
+            color: #d1d5db;
+        }
+
+        .login-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .login-link:hover {
+            text-decoration: underline;
+        }
+
+        .terms-links {
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            font-size: 0.8rem;
+        }
+
+        .terms-link {
+            color: #999;
+            text-decoration: none;
+        }
+
+        .dark .terms-link {
+            color: #9ca3af;
+        }
+
+        .terms-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 480px) {
+            .signup-container {
+                padding: 30px 20px;
+            }
+
+            .platform-name {
+                font-size: 1.5rem;
+            }
+
+            .social-icons {
+                gap: 15px;
+            }
+
+            .social-icon {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen pt-16"> 
+    <!-- Navigation Navbar - Fixed (inserted from homepage) -->
+    <nav class="bg-white shadow-lg dark:bg-gray-800 dark:shadow-gray-900 fixed top-0 left-0 right-0 z-50 transition-all duration-300 navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between py-4">
+                <!-- Logo - Left -->
+                <div class="flex-shrink-0">
+                    <div class="flex items-center space-x-2">
+                        <svg class="w-8 h-8 text-primary-blue animate-bounce-in" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                        <span class="text-xl font-bold text-primary-dark dark:text-gray-200">EduBridge</span>
+                    </div>
+                </div>
+                <!-- Nav Links - Center (Desktop) -->
+                <div class="hidden md:flex space-x-6 mx-auto">
+                    <a href="homepage.html" class="text-gray-600 hover:text-primary-blue dark:text-gray-300 dark:hover:text-primary-blue px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center">
+                     <i class="fa-solid fa-house mr-2"></i> Home</a>
+                <a href="student-lecture-page.html" class="block text-gray-700 dark:text-gray-200 px-3 py-2 rounded-md text-base font-medium transition-colors hover:text-primary-blue dark:hover:text-primary-blue flex items-center">
+                <i class="fa-solid fa-user-graduate mr-2"></i> Student Login</a>
+
+                <a href="Admin-dashboard.html" class="block text-gray-700 dark:text-gray-200 px-3 py-2 rounded-md text-base font-medium transition-colors hover:text-primary-blue dark:hover:text-primary-blue flex items-center">
+                <i class="fa-solid fa-user-shield mr-2"></i> Admin Login</a>
+
+                <a href="about.html" class="block text-gray-700 dark:text-gray-200 px-3 py-2 rounded-md text-base font-medium transition-colors hover:text-primary-blue dark:hover:text-primary-blue flex items-center">
+                <i class="fa-solid fa-circle-info mr-2"></i> About</a>
+
+                <a href="signup.html" class="block text-gray-700 dark:text-gray-200 px-3 py-2 rounded-md text-base font-medium transition-colors hover:text-primary-blue dark:hover:text-primary-blue flex items-center">
+                <i class="fa-solid fa-user-plus mr-2"></i> Signup</a>
+                </div>
+                <!-- Theme Toggle and Mobile menu button -->
+                <div class="flex items-center space-x-2 md:space-x-4">
+                    <button id="theme-toggle" class="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded-lg transition-colors">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <div class="md:hidden flex-shrink-0">
+                        <button id="mobile-menu-toggle" class="text-gray-600 dark:text-gray-300 hover:text-primary-blue dark:hover:text-primary-blue focus:outline-none">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile nav menu -->
+        <div id="mobile-menu" class="md:hidden fixed inset-0 bg-black bg-opacity-40 z-40 hidden">
+            <div class="absolute top-0 right-0 w-3/4 max-w-xs h-full bg-white dark:bg-gray-800 shadow-lg flex flex-col p-6 space-y-4 animate-slide-in-right">
+                <button id="mobile-menu-close" class="self-end mb-4 text-gray-600 dark:text-gray-300 hover:text-primary-blue dark:hover:text-primary-blue focus:outline-none">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+               <a href="homepage.html" class="text-gray-600 hover:text-primary-blue dark:text-gray-300 dark:hover:text-primary-blue px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center">
+                     <i class="fa-solid fa-house mr-2"></i> Home</a>
+                <a href="student-lecture-page.html" class="block text-gray-700 dark:text-gray-200 px-3 py-2 rounded-md text-base font-medium transition-colors hover:text-primary-blue dark:hover:text-primary-blue flex items-center">
+                <i class="fa-solid fa-user-graduate mr-2"></i> Student Login</a>
+
+                <a href="Admin-dashboard.html" class="block text-gray-700 dark:text-gray-200 px-3 py-2 rounded-md text-base font-medium transition-colors hover:text-primary-blue dark:hover:text-primary-blue flex items-center">
+                <i class="fa-solid fa-user-shield mr-2"></i> Admin Login</a>
+
+                <a href="about.html" class="block text-gray-700 dark:text-gray-200 px-3 py-2 rounded-md text-base font-medium transition-colors hover:text-primary-blue dark:hover:text-primary-blue flex items-center">
+                <i class="fa-solid fa-circle-info mr-2"></i> About</a>
+
+                <a href="signup.html" class="block text-gray-700 dark:text-gray-200 px-3 py-2 rounded-md text-base font-medium transition-colors hover:text-primary-blue dark:hover:text-primary-blue flex items-center">
+                <i class="fa-solid fa-user-plus mr-2"></i> Signup</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-1 flex items-center justify-center">
+        <section>
+            <div class="signup-container">
+                <div class="logo-section">
+                    <div class="logo-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <div class="platform-name">EduBridge</div>
+                </div>
+
+                <div class="social-options">
+                    <button class="social-btn google-btn">
+                        <i class="fab fa-google"></i>
+                        Sign up with Google
+                    </button>
+                    <button class="social-btn facebook-btn">
+                        <i class="fab fa-facebook-f"></i>
+                        Sign up with Facebook
+                    </button>
+                    <button class="social-btn email-btn">
+                        <i class="fas fa-envelope"></i>
+                        Sign up with Email
+                    </button>
+                </div>
+
+                <div class="separator">
+                    <span>OR</span>
+                </div>
+
+                <form id="signupForm">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" required>
+                    </div>
+                    <button type="submit" class="signup-btn">Sign Up</button>
+                </form>
+
+                <div class="social-icons">
+                    <i class="fab fa-facebook social-icon" title="Facebook"></i>
+                    <i class="fab fa-twitter social-icon" title="Twitter"></i>
+                    <i class="fab fa-linkedin social-icon" title="LinkedIn"></i>
+                    <i class="fab fa-instagram social-icon" title="Instagram"></i>
+                </div>
+
+                <div class="footer-links">
+                    <p>Already have an account? <a href="index.html#login" class="login-link">Login</a></p>
+                    <div class="terms-links">
+                        <a href="#" class="terms-link">Terms of Service</a>
+                        <a href="#" class="terms-link">Privacy Policy</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-primary-blue to-primary-teal text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="text-lg font-bold mb-4">EduBridge</h3>
+                    <p class="text-gray-300">Transforming education with interactive learning and seamless navigation.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="homepage.html" class="hover:text-white transition-colors">Home</a></li>
+                        <li><a href="student-dashboard.html" class="hover:text-white transition-colors">Student Dashboard</a></li>
+                        <li><a href="Admin-dashboard.html" class="hover:text-white transition-colors">Admin Dashboard</a></li>
+                        <li><a href="about.html" class="hover:text-white transition-colors">About</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Legal</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
+                        <!-- <li><a href="homepage.html#contact" class="hover:text-white transition-colors">Contact</a></li> -->
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Newsletter</h3>
+                    <p class="text-gray-300 mb-4">Get weekly study tips.</p>
+                    <form class="flex gap-2">
+                        <input type="email" placeholder="Your email" class="flex-1 px-3 py-2 rounded-full text-gray-900">
+                        <button class="bg-accent-green px-4 py-2 rounded-full hover:bg-green-600 transition-colors">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="flex justify-center space-x-6 mb-4">
+                <a href="#" class="text-gray-300 hover:text-white transition-colors"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="text-gray-300 hover:text-white transition-colors"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-gray-300 hover:text-white transition-colors"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="text-gray-300 hover:text-white transition-colors"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p class="text-center text-gray-400">&copy; 2025 EduBridge. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const html = document.documentElement;
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                html.classList.add('dark');
+            }
+
+            const toggle = document.getElementById('theme-toggle');
+            const icon = toggle.querySelector('i');
+
+            if (html.classList.contains('dark')) {
+                icon.className = 'fas fa-sun';
+            } else {
+                icon.className = 'fas fa-moon';
+            }
+
+            toggle.addEventListener('click', () => {
+                html.classList.toggle('dark');
+                if (html.classList.contains('dark')) {
+                    localStorage.setItem('theme', 'dark');
+                    icon.className = 'fas fa-sun';
+                } else {
+                    localStorage.setItem('theme', 'light');
+                    icon.className = 'fas fa-moon';
+                }
+            });
+
+            // Navbar Mobile Menu Toggle (for consistency across pages)
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuClose = document.getElementById('mobile-menu-close');
+            if (mobileMenuToggle) {
+                mobileMenuToggle.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+            if (mobileMenuClose) {
+                mobileMenuClose.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            }
+
+            // Basic form validation
+            document.getElementById('signupForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const name = document.getElementById('name').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                
+                if (!name || !email || !password || !confirmPassword) {
+                    alert('Please fill in all fields.');
+                    return;
+                }
+                
+                if (password !== confirmPassword) {
+                    alert('Passwords do not match.');
+                    return;
+                }
+                
+                if (password.length < 6) {
+                    alert('Password must be at least 6 characters long.');
+                    return;
+                }
+                
+                // Simulate successful signup (in real app, send to server)
+                alert('Signup successful! Welcome to Edubridge login through student login or admin login.');
+                this.reset();
+            });
+
+            // Social button click handlers (placeholders)
+            document.querySelector('.google-btn').addEventListener('click', function() {
+                alert('Redirecting to Google signup...');
+            });
+            
+            document.querySelector('.facebook-btn').addEventListener('click', function() {
+                alert('Redirecting to Facebook signup...');
+            });
+            
+            document.querySelector('.email-btn').addEventListener('click', function() {
+                alert('Redirecting to Email signup...');
+            });
+
+            // Social icons click (placeholders)
+            document.querySelectorAll('.social-icon').forEach(icon => {
+                icon.addEventListener('click', function() {
+                    const platform = this.classList[1].replace('fab fa-', '').replace('-', ' ').toUpperCase();
+                    alert(`Follow us on ${platform}!`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
