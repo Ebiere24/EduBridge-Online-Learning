@@ -758,14 +758,14 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between py-4">
                 <!-- Logo Left -->
-                <div class="flex-shrink-0">
+                <a href="homepage.html" class="flex-shrink-0">
                     <div class="flex items-center space-x-2">
                         <svg class="w-8 h-8 text-primary-blue animate-bounce-in" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                         </svg>
                         <span class="text-xl font-bold text-primary-dark dark:text-gray-500">EduBridge</span>
                     </div>
-                </div>
+                </a>
                 <!-- Nav Links  Center (Desktop) -->
                 <div class="hidden md:flex space-x-4">
                 <a href="homepage.html" class="text-gray-600 hover:text-primary-blue dark:text-gray-300 dark:hover:text-primary-blue px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center">
@@ -1014,14 +1014,32 @@
             const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
             const mobileMenu = document.getElementById('mobile-menu');
             const mobileMenuClose = document.getElementById('mobile-menu-close');
+            const sidebar = document.querySelector('.sidebar');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const sidebarClose = document.getElementById('sidebarClose');
+
             if (mobileMenuToggle) {
                 mobileMenuToggle.addEventListener('click', () => {
+                    const wasHidden = mobileMenu.classList.contains('hidden');
                     mobileMenu.classList.toggle('hidden');
+                    if (!mobileMenu.classList.contains('hidden')) { // opening
+                        // Close sidebar
+                        sidebar.classList.remove('open');
+                        sidebarOverlay.style.display = 'none';
+                        // Hide dashboard toggle
+                        if (mobileMenuBtn) mobileMenuBtn.style.display = 'none';
+                    } else { // closing
+                        // Show dashboard toggle
+                        if (mobileMenuBtn) mobileMenuBtn.style.display = 'block';
+                    }
                 });
             }
             if (mobileMenuClose) {
                 mobileMenuClose.addEventListener('click', () => {
                     mobileMenu.classList.add('hidden');
+                    // Show dashboard toggle
+                    if (mobileMenuBtn) mobileMenuBtn.style.display = 'block';
                 });
             }
 
@@ -1061,19 +1079,32 @@
             var sidebarClose = document.getElementById('sidebarClose');
             var sidebarOverlay = document.getElementById('sidebarOverlay');
             var mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
 
             function updateSidebarToggleVisibility() {
                 if (window.innerWidth <= 768) {
                     if (sidebarClose) sidebarClose.style.display = 'block';
+                    // Ensure both toggles visible and menus closed on mobile
+                    if (mobileMenuBtn) mobileMenuBtn.style.display = 'block';
+                    if (mobileMenuToggle) mobileMenuToggle.style.display = 'block';
+                    sidebar.classList.remove('open');
+                    sidebarOverlay.style.display = 'none';
+                    if (mobileMenu) mobileMenu.classList.add('hidden');
                 } else {
                     if (sidebarClose) sidebarClose.style.display = 'none';
                     sidebar.classList.remove('open');
                     sidebarOverlay.style.display = 'none';
+                    if (mobileMenu) mobileMenu.classList.add('hidden');
                 }
             }
 
             if (mobileMenuBtn) {
                 mobileMenuBtn.addEventListener('click', function() {
+                    // Close mobile menu
+                    if (mobileMenu) mobileMenu.classList.add('hidden');
+                    // Hide navbar toggle
+                    if (mobileMenuToggle) mobileMenuToggle.style.display = 'none';
                     sidebar.classList.add('open');
                     sidebarOverlay.style.display = 'block';
                 });
@@ -1082,11 +1113,15 @@
                 sidebarClose.addEventListener('click', function() {
                     sidebar.classList.remove('open');
                     sidebarOverlay.style.display = 'none';
+                    // Show navbar toggle
+                    if (mobileMenuToggle) mobileMenuToggle.style.display = 'block';
                 });
             }
             sidebarOverlay.addEventListener('click', function() {
                 sidebar.classList.remove('open');
                 sidebarOverlay.style.display = 'none';
+                // Show navbar toggle
+                if (mobileMenuToggle) mobileMenuToggle.style.display = 'block';
             });
 
             window.addEventListener('resize', updateSidebarToggleVisibility);
@@ -1659,4 +1694,4 @@
         });
     </script>
 </body>
-</html>
+</html>  
