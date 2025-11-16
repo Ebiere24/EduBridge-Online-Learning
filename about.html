@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>About Us - EduBridge</title>
     <!-- Tailwind CSS CDN (unchanged for consistency) -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -14,30 +14,95 @@
     <style>
         /* Modernized Custom Styles: Soft blues/teals, gradients, rounded corners */
         :root {  --primary-blue: #1E40AF;  --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
-        .light { --bg: #f8fafc; --card-bg: white; --text: #333; --border: #e2e8f0; }
-        .dark { --bg: #0f172a; --card-bg: #1e293b; --text: #e2e8f0; --border: #334155; }
-        body { background: var(--bg); color: var(--text); transition: all 0.3s ease; }
-        .dark body { background: var(--bg); color: var(--text); }
+
+        .light {
+             --bg: #f8fafc; --card-bg: white; --text: #333; --border: #e2e8f0; }
+        .dark {
+             --bg: #0f172a; --card-bg: #1e293b; --text: #e2e8f0; --border: #334155; }
+        body {
+             background: var(--bg); color: var(--text); transition: all 0.3s ease; }
+        .dark body {
+             background: var(--bg); color: var(--text); }
         /* Consistent rounded corners and shadows */
-        .card { background: var(--card-bg); border-radius: 1rem; box-shadow: var(--shadow-soft); transition: all 0.3s ease; }
-        .card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); }
+        .card {
+             background: var(--card-bg); border-radius: 1rem; box-shadow: var(--shadow-soft); transition: all 0.3s ease; }
+        .card:hover {
+             transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); }
         /* Smooth hover transitions */
-        .transition-all { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .transition-all {
+             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         /* Progress ring and animations (enhanced with teal accents) */
-        .progress-ring { transform: rotate(-90deg); }
-        .progress-ring__circle { transition: stroke-dashoffset 0.7s ease; stroke: var(--accent-green); }
+        .progress-ring {
+             transform: rotate(-90deg); }
+        .progress-ring__circle {
+             transition: stroke-dashoffset 0.7s ease; stroke: var(--accent-green); }
         /* FAQ and step hovers */
-        .faq-card:hover { transform: scale(1.02); border-color: var(--primary-teal); }
-        .step:hover .step-icon { color: var(--primary-teal); transform: scale(1.1); }
-        .animate-wobble { animation: wobble 1s ease-in-out; }
-        .animate-flow { animation: flow 2s ease-in-out infinite; }
+        .faq-card:hover {
+             transform: scale(1.02); border-color: var(--primary-teal); }
+        .step:hover .step-icon {
+             color: var(--primary-teal); transform: scale(1.1); }
+        .animate-wobble {
+             animation: wobble 1s ease-in-out; }
+        .animate-flow {
+             animation: flow 2s ease-in-out infinite; }
         /* Dark mode for cards */
-        .dark .card { background: var(--card-bg); }
+        .dark .card {
+             background: var(--card-bg); 
+            }
+            
         /* Footer consistency */
-        footer { background: linear-gradient(135deg, var(--primary-blue), var(--primary-teal)); color: white; }
+        footer {
+             background: linear-gradient(135deg,
+              var(--primary-blue), 
+              var(--primary-teal)); 
+              color: white; 
+            }
+
+        /* Prevent horizontal scroll */
+        html {
+             overflow-x: hidden; 
+            }
+
+        body {
+             overflow-x: hidden; 
+            }
+
+        .section {
+             word-wrap: break-word; 
+            }
+
+        .card {
+             word-wrap: break-word; 
+            }
+
+        .answer {
+             word-wrap: break-word; 
+            }
+
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 2.25rem !important; }
+            .hero p { font-size: 1.125rem !important; }
+            .section h2 { font-size: 1.875rem !important; }
+            .card { padding: 0.75rem !important; }
+            .card h3 { font-size: 1.125rem !important; }
+            .card p { font-size: 0.875rem !important; }
+            .step div { width: 2.5rem !important; height: 2.5rem !important; font-size: 0.875rem !important; }
+            .step svg { width: 1.5rem !important; height: 1.5rem !important; }
+            .step p { font-size: 0.875rem !important; }
+            .faq-card h3 { font-size: 1.125rem !important; }
+            .faq-card p { font-size: 0.875rem !important; }
+            .counter { font-size: 1.5rem !important; }
+            .grid { gap: 1rem !important; }
+            .py-16 { padding-top: 2rem !important; padding-bottom: 2rem !important; }
+            .navbar > div > div { padding-top: 0.75rem !important; padding-bottom: 0.75rem !important; }
+            .navbar .text-xl { font-size: 1.125rem !important; }
+            .navbar .w-8 { width: 1.5rem !important; height: 1.5rem !important; }
+            img { height: auto !important; max-height: 150px !important; }
+        }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300 pt-20">
+<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300">
     <!-- Consistent Navigation Navbar (standardized across all pages) -->
     <nav class="bg-white/95 backdrop-blur-md shadow-lg dark:bg-gray-800/95 dark:shadow-gray-900/50 fixed top-0 left-0 right-0 z-50 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -51,7 +116,7 @@
                 </div>
                 <!-- Nav Links (Desktop) -->
                 <div class="hidden md:flex space-x-6">
-                    <a href="homepage.html" class="text-gray-600 hover:text-primary-blue dark:text-gray-300 dark:hover:text-primary-blue px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center">
+                    <a href="index.html" class="text-gray-600 hover:text-primary-blue dark:text-gray-300 dark:hover:text-primary-blue px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center">
                      <i class="fa-solid fa-house mr-2"></i> Home</a>
                 <a href="student-lecture-page.html" class="block text-gray-700 dark:text-gray-200 px-3 py-2 rounded-md text-base font-medium transition-colors hover:text-primary-blue dark:hover:text-primary-blue flex items-center">
                 <i class="fa-solid fa-user-graduate mr-2"></i> Student Login</a>
@@ -83,7 +148,7 @@
                     <button id="mobile-menu-close" class="self-end text-gray-600 dark:text-gray-300 hover:text-primary-blue dark:hover:text-primary-blue">
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                     </button>
-                   <a href="homepage.html" class="text-gray-600 hover:text-primary-blue dark:text-gray-300 dark:hover:text-primary-blue px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center">
+                   <a href="index.html" class="text-gray-600 hover:text-primary-blue dark:text-gray-300 dark:hover:text-primary-blue px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center">
                      <i class="fa-solid fa-house mr-2"></i> Home</a>
                 <a href="student-lecture-page.html" class="block text-gray-700 dark:text-gray-200 px-3 py-2 rounded-md text-base font-medium transition-colors hover:text-primary-blue dark:hover:text-primary-blue flex items-center">
                 <i class="fa-solid fa-user-graduate mr-2"></i> Student Login</a>
@@ -102,7 +167,7 @@
     </nav>
 
     <!-- Hero Section - Modernized with gradient overlay and smooth AOS fade-in -->
-    <section class="relative bg-gradient-to-br from-primary-blue via-blue-600 to-blue-400 text-white py-20 lg:py-32 text-center overflow-hidden">
+    <section class="relative bg-gradient-to-br from-primary-blue via-blue-600 to-blue-400 text-white py-20 lg:py-32 text-center overflow-hidden hero">
         <div class="absolute inset-0 bg-black/20"></div> <!-- Soft overlay for readability -->
         <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6" data-aos="fade-up" data-aos-duration="800">Our Journey at EduBridge</h1>
@@ -111,7 +176,7 @@
     </section>
 
     <!-- Story Section - Enhanced with rounded images, hover shadows, and teal accents -->
-    <section class="py-16 bg-white dark:bg-gray-800" data-aos="fade-up" data-aos-duration="800">
+    <section class="py-16 bg-white dark:bg-gray-800 section" data-aos="fade-up" data-aos-duration="800">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-3xl sm:text-4xl font-bold text-center text-primary-dark mb-12 dark:text-gray-200" data-aos="fade-down">A Transformative Story</h2>
             <div class="grid md:grid-cols-3 gap-8">
@@ -135,12 +200,12 @@
     </section>
 
     <!-- People Section - Added teal borders on hover, rounded avatars -->
-    <section class="py-16 bg-gray-50 dark:bg-gray-900" data-aos="fade-up" data-aos-duration="800">
+    <section class="py-16 bg-gray-50 dark:bg-gray-900 section" data-aos="fade-up" data-aos-duration="800">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-3xl sm:text-4xl font-bold text-center text-primary-dark mb-12 dark:text-gray-200" data-aos="fade-down">Lives We've Changed</h2>
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="card text-center" data-aos="slide-right" data-aos-delay="100">
-                <img src="WIN_20251113_04_51_11_Pro.jpg" alt="Sarah" class="rounded-full mx-auto mb-4 shadow-md w-32 h-32 object-cover">
+                <img src="WIN_20251113_04_51_11_Pro.jpg" alt="Ebiere" class="rounded-full mx-auto mb-4 shadow-md w-32 h-32 object-cover">
                 <h3 class="text-xl font-semibold mb-2 text-primary-teal">Ebiere's Journey</h3>
                 <p class="text-gray-600 dark:text-gray-400">From struggling in math to topping the class  EduBridge made learning enjoyable!</p>
                 </div>
@@ -160,7 +225,7 @@
     </section>
 
     <!-- Challenges Section - Enhanced with gradient bars, teal icons, hover reveals -->
-    <section class="py-16 bg-white dark:bg-gray-800" data-aos="fade-up" data-aos-duration="800">
+    <section class="py-16 bg-white dark:bg-gray-800 section" data-aos="fade-up" data-aos-duration="800">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-3xl sm:text-4xl font-bold text-center text-primary-dark mb-12 dark:text-gray-200" data-aos="fade-down">The Challenges We Tackle</h2>
             <div class="grid md:grid-cols-3 gap-8">
@@ -223,7 +288,7 @@
     </section>
 
     <!-- Resolution Section - Added teal icons, gradient cards -->
-    <section class="py-16 bg-gray-50 dark:bg-gray-900" data-aos="fade-up" data-aos-duration="800">
+    <section class="py-16 bg-gray-50 dark:bg-gray-900 section" data-aos="fade-up" data-aos-duration="800">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-3xl sm:text-4xl font-bold text-center text-primary-dark mb-12 dark:text-gray-200" data-aos="fade-down">How We Resolve Them</h2>
             <div class="grid md:grid-cols-3 gap-8">
@@ -247,7 +312,7 @@
     </section>
 
     <!-- Learning Journey Section - Rounded steps, teal numbering, hover glow -->
-    <section class="py-16 bg-white dark:bg-gray-800" data-aos="fade-up" data-aos-duration="800">
+    <section class="py-16 bg-white dark:bg-gray-800 section" data-aos="fade-up" data-aos-duration="800">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-3xl sm:text-4xl font-bold text-center text-primary-dark mb-12 dark:text-gray-200" data-aos="fade-down">Your Learning Journey</h2>
             <div class="grid md:grid-cols-4 gap-6">
@@ -276,7 +341,7 @@
     </section>
 
     <!-- FAQ Section - Rounded cards, teal icons, smooth expand on click -->
-    <section class="py-16 bg-gray-50 dark:bg-gray-900" data-aos="fade-up" data-aos-duration="800">
+    <section class="py-16 bg-gray-50 dark:bg-gray-900 section" data-aos="fade-up" data-aos-duration="800">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-3xl sm:text-4xl font-bold text-center text-primary-dark mb-12 dark:text-gray-200" data-aos="fade-down">Got Questions?</h2>
             <div class="space-y-4">
@@ -297,7 +362,7 @@
     </section>
 
     <!-- Learning Spaces Section - Added gradient overlay, pulse animation on images -->
-    <section class="py-16 bg-white dark:bg-gray-800 relative overflow-hidden" data-aos="fade-up" data-aos-duration="800">
+    <section class="py-16 bg-white dark:bg-gray-800 relative overflow-hidden section" data-aos="fade-up" data-aos-duration="800">
         <div class="absolute inset-0 bg-gradient-to-r from-primary-blue/10 to-primary-teal/10"></div>
         <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-3xl sm:text-4xl font-bold text-center text-primary-dark mb-12 dark:text-gray-200" data-aos="fade-down">Our Vibrant Learning Spaces</h2>
@@ -311,7 +376,7 @@
     </section>
 
     <!-- Vision Section - Gradient progress bar, smooth counter animation -->
-    <section class="py-16 bg-gray-50 dark:bg-gray-900" data-aos="fade-up" data-aos-duration="800">
+    <section class="py-16 bg-gray-50 dark:bg-gray-900 section" data-aos="fade-up" data-aos-duration="800">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-3xl sm:text-4xl font-bold text-center text-primary-dark mb-12 dark:text-gray-200" data-aos="fade-down">Our Vision for Tomorrow</h2>
             <p class="text-center text-lg text-gray-600 dark:text-gray-400 mb-12" data-aos="fade-up" data-aos-delay="100">By 2030, we'll integrate AI tutors, expand to 1M users, and launch VR courses for immersive learning.</p>
@@ -322,7 +387,7 @@
     </section>
 
     <!-- Impact Metrics Section - Teal counters, ring progress with hover glow -->
-    <section class="py-16 bg-white dark:bg-gray-800" data-aos="fade-up" data-aos-duration="800">
+    <section class="py-16 bg-white dark:bg-gray-800 section" data-aos="fade-up" data-aos-duration="800">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-3xl sm:text-4xl font-bold text-center text-primary-dark mb-12 dark:text-gray-200" data-aos="fade-down">Our Impact So Far</h2>
             <div class="grid md:grid-cols-4 gap-8 text-center">
@@ -363,8 +428,8 @@
                 <div>
                     <h3 class="text-lg font-bold mb-4">Quick Links</h3>
                     <ul class="space-y-2 text-gray-300">
-                        <li><a href="homepage.html" class="hover:text-white transition-colors">Home</a></li>
-                        <li><a href="student-dashboard.html" class="hover:text-white transition-colors">Student Dashboard</a></li>
+                        <li><a href="index.html" class="hover:text-white transition-colors">Home</a></li>
+                        <li><a href="student-lecture-page.html" class="hover:text-white transition-colors">Student Dashboard</a></li>
                         <li><a href="Admin-dashboard.html" class="hover:text-white transition-colors">Admin Dashboard</a></li>
                         <li><a href="about.html" class="hover:text-white transition-colors">About</a></li>
                     </ul>
@@ -509,6 +574,17 @@
                     }
                 });
             }
+
+            // Adjust body top padding to match the fixed navbar height
+            function adjustBodyPadding() {
+                var nav = document.querySelector('nav');
+                if (nav) {
+                    document.body.style.paddingTop = nav.offsetHeight + 'px';
+                }
+            }
+            window.addEventListener('resize', adjustBodyPadding);
+            // Run once on load to remove excessive top gap on small screens
+            adjustBodyPadding();
         });
     </script>
 </body>

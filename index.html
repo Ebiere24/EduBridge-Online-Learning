@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduBridge - Educational Platform</title>
+    <!-- Preload hero image for faster load -->
+    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1580582932707-520aed937b7b?ixlib=rb-4.0.3&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1920">
     <!-- AOS CDN for scroll animations -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <!-- Heroicons -->
@@ -11,6 +13,10 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* Reset for full mobile width */
+        * { box-sizing: border-box; }
+        body { margin: 0; padding: 0; width: 100%; overflow-x: hidden; }
+       
         /* Custom for enhanced animations */
         .animate-on-scroll { opacity: 0; transform: translateY(20px); transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
         .animate-on-scroll.animate { opacity: 1; transform: translateY(0); }
@@ -27,12 +33,19 @@
         @keyframes slideInLeft { 0% { opacity: 0; transform: translateX(-50px); } 100% { opacity: 1; transform: translateX(0); } }
         @keyframes slideInRight { 0% { opacity: 0; transform: translateX(50px); } 100% { opacity: 1; transform: translateX(0); } }
         @keyframes bounceIn { 0% { opacity: 0; transform: scale(0.3); } 50% { opacity: 1; transform: scale(1.05); } 70% { transform: scale(0.9); } 100% { opacity: 1; transform: scale(1); } }
+       
+        /* Mobile-specific tweaks */
+        @media (max-width: 640px) {
+            .hero-card { padding: 1rem !important; } /* Reduce hero card padding for tiny screens */
+            .feature-card { padding: 0.75rem !important; margin: 0 !important; width: 100% !important; } /* Full-width feature cards */
+            nav .px-2 { padding-left: 1rem; padding-right: 1rem; } /* Wider navbar padding on mobile */
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300 pt-20">
     <!-- Navigation Navbar -->
     <nav class="bg-white shadow-lg dark:bg-gray-800 dark:shadow-gray-900 fixed top-0 left-0 right-0 z-50 transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-4 md:px-6 lg:px-8"> <!-- Changed px-2 to px-4 for mobile -->
             <div class="flex items-center justify-between py-4">
                 <!-- Logo - Left -->
                 <div class="flex-shrink-0">
@@ -45,22 +58,17 @@
                 </div>
                 <!-- Nav Links - Center (Desktop) -->
                 <div class="hidden md:flex space-x-4 mx-auto">
-                    <a href="homepage.html" class="text-gray-600 hover:text-primary-blue dark:text-gray-300 dark:hover:text-primary-blue px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center">
+                    <a href="index.html" class="text-gray-600 hover:text-primary-blue dark:text-gray-300 dark:hover:text-primary-blue px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center"> <!-- Changed to index.html -->
                      <i class="fa-solid fa-house mr-2"></i> Home
                         </a>
-
                 <a href="student-lecture-page.html" class="text-gray-700 dark:text-gray-200 px-3 py-2 rounded-md text-sm font-medium transition-colors hover:text-primary-blue dark:hover:text-primary-blue flex items-center">
                 <i class="fa-solid fa-user-graduate mr-2"></i> Student Login</a>
-
                 <a href="Admin-dashboard.html" class="text-gray-700 dark:text-gray-200 px-3 py-2 rounded-md text-sm font-medium transition-colors hover:text-primary-blue dark:hover:text-primary-blue flex items-center">
                 <i class="fa-solid fa-user-shield mr-2"></i> Admin Login</a>
-
                 <a href="about.html" class="text-gray-700 dark:text-gray-200 px-3 py-2 rounded-md text-sm font-medium transition-colors hover:text-primary-blue dark:hover:text-primary-blue flex items-center">
                 <i class="fa-solid fa-circle-info mr-2"></i> About</a>
-
                 <a href="signup.html" class="text-gray-700 dark:text-gray-200 px-3 py-2 rounded-md text-sm font-medium transition-colors hover:text-primary-blue dark:hover:text-primary-blue flex items-center">
                 <i class="fa-solid fa-user-plus mr-2"></i> Signup</a>
-
             </div>
             <!-- Theme Toggle and Mobile menu button -->
             <div class="flex items-center space-x-1 md:space-x-4">
@@ -78,88 +86,75 @@
         </div>
     </div>
 </nav>
-
     <!-- Mobile nav menu -->
     <div id="mobile-menu" class="md:hidden fixed inset-0 bg-black bg-opacity-40 z-40 hidden overflow-x-hidden">
-        <div class="absolute top-0 right-0 w-4/5 max-w-xs h-full 
-            bg-white dark:bg-gray-800 shadow-lg 
-            flex flex-col p-6 space-y-4 
+        <div class="absolute top-0 right-0 w-4/5 max-w-xs h-full
+            bg-white dark:bg-gray-800 shadow-lg
+            flex flex-col p-6 space-y-4
             animate-slide-in-right overflow-y-auto">
-
     <!-- CLOSE BUTTON -->
-    <button id="mobile-menu-close" 
-            class="self-end mb-4 text-gray-600 dark:text-gray-300 
-                   hover:text-primary-blue dark:hover:text-primary-blue 
+    <button id="mobile-menu-close"
+            class="self-end mb-4 text-gray-600 dark:text-gray-300
+                   hover:text-primary-blue dark:hover:text-primary-blue
                    focus:outline-none">
         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M6 18L18 6M6 6l12 12" />
         </svg>
     </button>
-
  <!-- MENU LINKS --><nav >
-
-<a href="homepage.html" 
-   class="text-gray-700 dark:text-gray-300 dark:hover:text-primary-blue 
-          px-3 py-2 rounded-md text-sm font-medium transition-colors 
+<a href="index.html" <!-- Changed to index.html -->
+   class="text-gray-700 dark:text-gray-300 dark:hover:text-primary-blue
+          px-3 py-2 rounded-md text-sm font-medium transition-colors
           flex items-center w-full">
     <i class="fa-solid fa-house mr-2"></i> Home
 </a>
-
-<a href="student-lecture-page.html" 
-   class="text-gray-700 dark:text-gray-200 hover:text-primary-blue 
-          dark:hover:text-primary-blue px-3 py-2 rounded-md text-sm 
+<a href="student-lecture-page.html"
+   class="text-gray-700 dark:text-gray-200 hover:text-primary-blue
+          dark:hover:text-primary-blue px-3 py-2 rounded-md text-sm
           font-medium transition-colors flex items-center w-full">
     <i class="fa-solid fa-user-graduate mr-2"></i> Student Login
 </a>
-
-<a href="Admin-dashboard.html" 
-   class="text-gray-700 dark:text-gray-200 hover:text-primary-blue 
-          dark:hover:text-primary-blue px-3 py-2 rounded-md text-sm 
+<a href="Admin-dashboard.html"
+   class="text-gray-700 dark:text-gray-200 hover:text-primary-blue
+          dark:hover:text-primary-blue px-3 py-2 rounded-md text-sm
           font-medium transition-colors flex items-center w-full">
     <i class="fa-solid fa-user-shield mr-2"></i> Admin Login
 </a>
-
-<a href="about.html" 
-   class="text-gray-700 dark:text-gray-200 hover:text-primary-blue 
-          dark:hover:text-primary-blue px-3 py-2 rounded-md text-sm 
+<a href="about.html"
+   class="text-gray-700 dark:text-gray-200 hover:text-primary-blue
+          dark:hover:text-primary-blue px-3 py-2 rounded-md text-sm
           font-medium transition-colors flex items-center w-full">
     <i class="fa-solid fa-circle-info mr-2"></i> About
 </a>
-
-<a href="signup.html" 
-   class="text-gray-700 dark:text-gray-200 hover:text-primary-blue 
-          dark:hover:text-primary-blue px-3 py-2 rounded-md text-sm 
+<a href="signup.html"
+   class="text-gray-700 dark:text-gray-200 hover:text-primary-blue
+          dark:hover:text-primary-blue px-3 py-2 rounded-md text-sm
           font-medium transition-colors flex items-center w-full">
     <i class="fa-solid fa-user-plus mr-2"></i> Signup
 </a></nav>
         </div>
     </div>
-
 <!-- Hero Section -->
 <section id="home" class="relative min-h-screen flex items-center justify-center text-center text-white lg:min-h-[80vh] animate-fade-in-up overflow-hidden" data-aos="fade-in">
-    <!-- Background Video -->
-    <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover z-0">
-        <source src="https://videos.pexels.com/video-files/7730006/7730006-hd_1920_1080_25fps.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+    <!-- Background Image (Lighter & Faster Alternative to Video) -->
+    <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?ixlib=rb-4.0.3&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1920" alt="Online Learning Background" class="absolute inset-0 w-full h-full object-cover z-0">
     <!-- Overlay -->
     <div class="absolute inset-0 bg-black opacity-40 z-10"></div>
     <!-- Content -->
-     <div class="relative z-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl p-6 sm:p-8 shadow-2xl border border-white border-opacity-20 animate-bounce-in" data-aos="zoom-in" data-aos-delay="200">
+     <div class="relative z-20 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8"> <!-- Added w-full -->
+        <div class="w-full bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl p-6 sm:p-8 shadow-2xl border border-white border-opacity-20 animate-bounce-in hero-card" data-aos="zoom-in" data-aos-delay="200"> <!-- Added w-full and hero-card class -->
             <blockquote class="text-3xl sm:text-4xl md:text-6xl font-serif italic mb-6 leading-relaxed opacity-0 animate-hero-text" data-aos="fade-up" data-aos-delay="300">“Success doesn’t come from what you do occasionally, it comes from what you do consistently.”</blockquote>
             <p class="text-xl sm:text-2xl font-light mb-8 opacity-0 animate-hero-text" data-aos="fade-up" data-aos-delay="500">Welcome Back! Learn, Take Exams, Succeed All in One Platform.</p>
             <a href="signup.html" class="inline-block bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg opacity-0 animate-hero-text" data-aos="fade-up" data-aos-delay="700">Continue Learning</a>
         </div>
     </div>
 </section>
-
 <!-- Mission & Vision -->
 <section class="py-6 sm:py-8 lg:py-12 bg-white dark:bg-gray-800" data-aos="fade-up">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8"> <!-- Added w-full -->
         <div class="grid md:grid-cols-2 gap-8 sm:gap-12">
-            <div class="bg-gray-50 rounded-xl p-6 sm:p-8 shadow-md border border-gray-200 dark:bg-gray-700 dark:border-gray-600 animate-slide-in-left hover:border-green-300 transition-colors duration-300" data-aos="slide-right" data-aos-delay="100">
+            <div class="bg-gray-50 rounded-xl p-6 sm:p-8 shadow-md border border-gray-200 dark:bg-gray-700 dark:border-gray-600 animate-slide-in-left hover:border-green-300 transition-colors duration-300 w-full" data-aos="slide-right" data-aos-delay="100"> <!-- Added w-full -->
                 <h2 class="text-2xl sm:text-3xl font-bold text-primary-dark mb-6 flex items-center dark:text-gray-200">
                     <svg class="w-8 h-8 text-primary-blue mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
@@ -168,17 +163,13 @@
                 </h2>
                 <p class="text-gray-700 leading-relaxed space-y-3 text-sm sm:text-base dark:text-gray-300">
                     To provide an easy-to-use platform where students can access lectures, take exams, and interact with teachers without barriers.
-
                     We empower learners with high-quality, accessible educational resources tailored to their needs.
-
                     Our goal is to foster a collaborative environment that encourages curiosity and growth.
-
                     By bridging the gap between theory and practice, we help students apply knowledge effectively.
-
                     Ultimately, we aim to make education inclusive and engaging for all.
                 </p>
             </div>
-            <div class="bg-gray-50 rounded-xl p-6 sm:p-8 shadow-md border border-gray-200 dark:bg-gray-700 dark:border-gray-600 animate-slide-in-right hover:border-green-300 transition-colors duration-300" data-aos="slide-left" data-aos-delay="200">
+            <div class="bg-gray-50 rounded-xl p-6 sm:p-8 shadow-md border border-gray-200 dark:bg-gray-700 dark:border-gray-600 animate-slide-in-right hover:border-green-300 transition-colors duration-300 w-full" data-aos="slide-left" data-aos-delay="200"> <!-- Added w-full -->
                 <h2 class="text-2xl sm:text-3xl font-bold text-primary-dark mb-6 flex items-center dark:text-gray-200">
                     <svg class="w-8 h-8 text-primary-blue mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -187,23 +178,18 @@
                 </h2>
                 <p class="text-gray-700 leading-relaxed space-y-3 text-sm sm:text-base dark:text-gray-300">
                     We aim to be the most reliable digital learning platform bridging communication between students and teachers.
-
                     In the future, we envision a world where education is borderless and personalized for every learner.
-
                     Our platform will leverage cutting-edge technology to enhance interactive learning experiences.
-
                     We strive to inspire lifelong learning and equip individuals with skills for success.
-
                     Together, we'll transform education into a seamless journey of discovery and achievement.
                 </p>
             </div>
         </div>
     </div>
 </section>
-
 <!-- Features Overview -->
 <section id="features" class="py-12 sm:py-16 lg:py-20 bg-gray-50 dark:bg-gray-800" data-aos="fade-up">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8"> <!-- Added w-full -->
         <h2 class="text-3xl sm:text-4xl font-bold text-center text-primary-dark mb-12 sm:mb-16 dark:text-gray-200 animate-fade-in-up">Your Dashboard Features</h2>
         <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
             <!-- Student Features -->
@@ -211,7 +197,7 @@
                 <h3 class="text-xl sm:text-2xl font-bold text-primary-dark mb-6 sm:mb-8 text-center dark:text-gray-200">For Students</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                     <!-- Card 1: Login -->
-                    <div class="bg-white rounded-xl p-4 sm:p-6 shadow-md border border-gray-200 hover:shadow-lg card-hover dark:bg-gray-700 dark:border-gray-600 animate-on-scroll relative overflow-hidden" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="bg-white rounded-xl p-4 sm:p-6 shadow-md border border-gray-200 hover:shadow-lg card-hover dark:bg-gray-700 dark:border-gray-600 animate-on-scroll relative overflow-hidden feature-card" data-aos="zoom-in" data-aos-delay="200"> <!-- Added feature-card class -->
                         <div class="flex items-center mb-3 sm:mb-4">
                             <svg class="w-6 h-6 text-primary-blue mr-3 flex-shrink-0 transition-transform duration-300 hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
@@ -226,7 +212,7 @@
                         <span class="badge-pulse absolute top-2 right-2 bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Mastered</span>
                     </div>
                     <!-- Card 2: View & Read Lecture Materials -->
-                    <div class="bg-white rounded-xl p-4 sm:p-6 shadow-md border border-gray-200 hover:shadow-lg card-hover dark:bg-gray-700 dark:border-gray-600 animate-on-scroll relative overflow-hidden" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="bg-white rounded-xl p-4 sm:p-6 shadow-md border border-gray-200 hover:shadow-lg card-hover dark:bg-gray-700 dark:border-gray-600 animate-on-scroll relative overflow-hidden feature-card" data-aos="zoom-in" data-aos-delay="300"> <!-- Added feature-card -->
                         <div class="flex items-center mb-3 sm:mb-4">
                             <svg class="w-6 h-6 text-primary-blue mr-3 flex-shrink-0 transition-transform duration-300 hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
@@ -241,7 +227,7 @@
                         <span class="badge-pulse absolute top-2 right-2 bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-bold">80% Complete</span>
                     </div>
                     <!-- Card 3: Submit Questions/Comments -->
-                    <div class="bg-white rounded-xl p-4 sm:p-6 shadow-md border border-gray-200 hover:shadow-lg card-hover dark:bg-gray-700 dark:border-gray-600 animate-on-scroll relative overflow-hidden" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="bg-white rounded-xl p-4 sm:p-6 shadow-md border border-gray-200 hover:shadow-lg card-hover dark:bg-gray-700 dark:border-gray-600 animate-on-scroll relative overflow-hidden feature-card" data-aos="zoom-in" data-aos-delay="400"> <!-- Added feature-card -->
                         <div class="flex items-center mb-3 sm:mb-4">
                             <svg class="w-6 h-6 text-primary-blue mr-3 flex-shrink-0 transition-transform duration-300 hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
@@ -256,7 +242,7 @@
                         <span class="badge-pulse absolute top-2 right-2 bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-bold">In Progress</span>
                     </div>
                     <!-- Card 4: Take Quizzes & Exams -->
-                    <div class="bg-white rounded-xl p-4 sm:p-6 shadow-md border border-gray-200 hover:shadow-lg card-hover dark:bg-gray-700 dark:border-gray-600 animate-on-scroll relative overflow-hidden" data-aos="zoom-in" data-aos-delay="500">
+                    <div class="bg-white rounded-xl p-4 sm:p-6 shadow-md border border-gray-200 hover:shadow-lg card-hover dark:bg-gray-700 dark:border-gray-600 animate-on-scroll relative overflow-hidden feature-card" data-aos="zoom-in" data-aos-delay="500"> <!-- Added feature-card -->
                         <div class="flex items-center mb-3 sm:mb-4">
                             <svg class="w-6 h-6 text-primary-blue mr-3 flex-shrink-0 transition-transform duration-300 hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -271,7 +257,7 @@
                         <span class="badge-pulse absolute top-2 right-2 bg-orange-100 text-orange-800 px-2 py-1 rounded-full text-xs font-bold">40% Complete</span>
                     </div>
                     <!-- Card 5: View Results -->
-                    <div class="bg-white rounded-xl p-4 sm:p-6 shadow-md border border-gray-200 hover:shadow-lg card-hover dark:bg-gray-700 dark:border-gray-600 animate-on-scroll relative overflow-hidden" data-aos="zoom-in" data-aos-delay="600">
+                    <div class="bg-white rounded-xl p-4 sm:p-6 shadow-md border border-gray-200 hover:shadow-lg card-hover dark:bg-gray-700 dark:border-gray-600 animate-on-scroll relative overflow-hidden feature-card" data-aos="zoom-in" data-aos-delay="600"> <!-- Added feature-card -->
                         <div class="flex items-center mb-3 sm:mb-4">
                             <svg class="w-6 h-6 text-primary-blue mr-3 flex-shrink-0 transition-transform duration-300 hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
@@ -286,7 +272,7 @@
                         <span class="badge-pulse absolute top-2 right-2 bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs font-bold">Unlocked</span>
                     </div>
                     <!-- Card 6: Join Live Sessions -->
-                    <div class="bg-white rounded-xl p-4 sm:p-6 shadow-md border border-gray-200 hover:shadow-lg card-hover dark:bg-gray-700 dark:border-gray-600 animate-on-scroll relative overflow-hidden" data-aos="zoom-in" data-aos-delay="700">
+                    <div class="bg-white rounded-xl p-4 sm:p-6 shadow-md border border-gray-200 hover:shadow-lg card-hover dark:bg-gray-700 dark:border-gray-600 animate-on-scroll relative overflow-hidden feature-card" data-aos="zoom-in" data-aos-delay="700"> <!-- Added feature-card -->
                         <div class="flex items-center mb-3 sm:mb-4">
                             <svg class="w-6 h-6 text-primary-blue mr-3 flex-shrink-0 transition-transform duration-300 hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
@@ -307,7 +293,7 @@
                 <h3 class="text-xl sm:text-2xl font-bold text-primary-dark mb-6 sm:mb-8 text-center dark:text-gray-200">For Teachers</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                     <!-- Card 1: Login -->
-                    <div class="bg-white rounded-xl p-4 sm:p-6 shadow-md border border-gray-200 hover:shadow-lg card-hover dark:bg-gray-700 dark:border-gray-600 animate-on-scroll relative overflow-hidden" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="bg-white rounded-xl p-4 sm:p-6 shadow-md border border-gray-200 hover:shadow-lg card-hover dark:bg-gray-700 dark:border-gray-600 animate-on-scroll relative overflow-hidden feature-card" data-aos="zoom-in" data-aos-delay="200"> <!-- Added feature-card -->
                         <div class="flex items-center mb-3 sm:mb-4">
                             <svg class="w-6 h-6 text-primary-blue mr-3 flex-shrink-0 transition-transform duration-300 hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
@@ -322,7 +308,7 @@
                         <span class="badge-pulse absolute top-2 right-2 bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-bold">Available</span>
                     </div>
                     <!-- Card 2: Add/Edit Lecture Materials -->
-                    <div class="bg-white rounded-xl p-4 sm:p-6 shadow-md border border-gray-200 hover:shadow-lg card-hover dark:bg-gray-700 dark:border-gray-600 animate-on-scroll relative overflow-hidden" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="bg-white rounded-xl p-4 sm:p-6 shadow-md border border-gray-200 hover:shadow-lg card-hover dark:bg-gray-700 dark:border-gray-600 animate-on-scroll relative overflow-hidden feature-card" data-aos="zoom-in" data-aos-delay="300"> <!-- Added feature-card -->
                         <div class="flex items-center mb-3 sm:mb-4">
                             <svg class="w-6 h-6 text-primary-blue mr-3 flex-shrink-0 transition-transform duration-300 hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
@@ -337,7 +323,7 @@
                         <span class="badge-pulse absolute top-2 right-2 bg-gray-100 text-gray-800 px-2 py-1 rounded-full text-xs font-bold">Enabled</span>
                     </div>
                     <!-- Card 3: Answer Student Questions -->
-                    <div class="bg-white rounded-xl p-4 sm:p-6 shadow-md border border-gray-200 hover:shadow-lg card-hover dark:bg-gray-700 dark:border-gray-600 animate-on-scroll relative overflow-hidden" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="bg-white rounded-xl p-4 sm:p-6 shadow-md border border-gray-200 hover:shadow-lg card-hover dark:bg-gray-700 dark:border-gray-600 animate-on-scroll relative overflow-hidden feature-card" data-aos="zoom-in" data-aos-delay="400"> <!-- Added feature-card -->
                         <div class="flex items-center mb-3 sm:mb-4">
                             <svg class="w-6 h-6 text-primary-blue mr-3 flex-shrink-0 transition-transform duration-300 hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
@@ -352,7 +338,7 @@
                         <span class="badge-pulse absolute top-2 right-2 bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">Active</span>
                     </div>
                     <!-- Card 4: Create & Publish Exams/Quizzes -->
-                    <div class="bg-white rounded-xl p-4 sm:p-6 shadow-md border border-gray-200 hover:shadow-lg card-hover dark:bg-gray-700 dark:border-gray-600 animate-on-scroll relative overflow-hidden" data-aos="zoom-in" data-aos-delay="500">
+                    <div class="bg-white rounded-xl p-4 sm:p-6 shadow-md border border-gray-200 hover:shadow-lg card-hover dark:bg-gray-700 dark:border-gray-600 animate-on-scroll relative overflow-hidden feature-card" data-aos="zoom-in" data-aos-delay="500"> <!-- Added feature-card -->
                         <div class="flex items-center mb-3 sm:mb-4">
                             <svg class="w-6 h-6 text-primary-blue mr-3 flex-shrink-0 transition-transform duration-300 hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -367,7 +353,7 @@
                         <span class="badge-pulse absolute top-2 right-2 bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-bold">Ready</span>
                     </div>
                     <!-- Card 5: See All Student Results -->
-                    <div class="bg-white rounded-xl p-4 sm:p-6 shadow-md border border-gray-200 hover:shadow-lg card-hover dark:bg-gray-700 dark:border-gray-600 animate-on-scroll relative overflow-hidden" data-aos="zoom-in" data-aos-delay="600">
+                    <div class="bg-white rounded-xl p-4 sm:p-6 shadow-md border border-gray-200 hover:shadow-lg card-hover dark:bg-gray-700 dark:border-gray-600 animate-on-scroll relative overflow-hidden feature-card" data-aos="zoom-in" data-aos-delay="600"> <!-- Added feature-card -->
                         <div class="flex items-center mb-3 sm:mb-4">
                             <svg class="w-6 h-6 text-primary-blue mr-3 flex-shrink-0 transition-transform duration-300 hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
@@ -382,7 +368,7 @@
                         <span class="badge-pulse absolute top-2 right-2 bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs font-bold">Insights</span>
                     </div>
                     <!-- Card 6: Start Live Teaching Sessions -->
-                    <div class="bg-white rounded-xl p-4 sm:p-6 shadow-md border border-gray-200 hover:shadow-lg card-hover dark:bg-gray-700 dark:border-gray-600 animate-on-scroll relative overflow-hidden" data-aos="zoom-in" data-aos-delay="700">
+                    <div class="bg-white rounded-xl p-4 sm:p-6 shadow-md border border-gray-200 hover:shadow-lg card-hover dark:bg-gray-700 dark:border-gray-600 animate-on-scroll relative overflow-hidden feature-card" data-aos="zoom-in" data-aos-delay="700"> <!-- Added feature-card -->
                         <div class="flex items-center mb-3 sm:mb-4">
                             <svg class="w-6 h-6 text-primary-blue mr-3 flex-shrink-0 transition-transform duration-300 hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
@@ -401,11 +387,10 @@
         </div>
     </div>
 </section>
-
 <!-- Special Feature -->
 <section class="py-12 sm:py-16 lg:py-20 bg-white dark:bg-gray-800" data-aos="fade-up">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div class="bg-gradient-to-r from-primary-blue to-blue-600 rounded-2xl p-6 sm:p-12 shadow-2xl text-white relative overflow-hidden animate-bounce-in card-hover" data-aos="zoom-in">
+    <div class="max-w-4xl w-full mx-auto px-4 sm:px-6 lg:px-8 text-center"> <!-- Added w-full -->
+        <div class="bg-gradient-to-r from-primary-blue to-blue-600 rounded-2xl p-6 sm:p-12 shadow-2xl text-white relative overflow-hidden animate-bounce-in card-hover w-full" data-aos="zoom-in"> <!-- Added w-full -->
             <div class="absolute inset-0 bg-black opacity-10"></div>
             <div class="relative z-10">
                 <h2 class="text-2xl sm:text-4xl font-bold mb-6">Real-Time Learning: Join Live Sessions</h2>
@@ -422,10 +407,9 @@
         <p>You've unlocked a new skill! Keep going consistency is key.</p>
     </div>
 </section>
-
 <!-- Footer -->
 <footer class="bg-gradient-to-r from-primary-blue to-primary-teal text-white py-8">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8"> <!-- Added w-full -->
         <div class="grid md:grid-cols-4 gap-8 mb-8">
             <div>
                 <h3 class="text-lg font-bold mb-4">EduBridge</h3>
@@ -434,8 +418,8 @@
             <div>
                 <h3 class="text-lg font-bold mb-4">Quick Links</h3>
                 <ul class="space-y-2 text-gray-300">
-                    <li><a href="homepage.html" class="hover:text-white transition-colors">Home</a></li>
-                    <li><a href="student-dashboard.html" class="hover:text-white transition-colors">Student Dashboard</a></li>
+                    <li><a href="index.html" class="hover:text-white transition-colors">Home</a></li>
+                    <li><a href="student-lecture-page.html" class="hover:text-white transition-colors">Student Dashboard</a></li>
                     <li><a href="Admin-dashboard.html" class="hover:text-white transition-colors">Admin Dashboard</a></li>
                     <li><a href="about.html" class="hover:text-white transition-colors">About</a></li>
                 </ul>
@@ -466,14 +450,12 @@
         <p class="text-center text-gray-400">&copy; 2025 EduBridge. All rights reserved.</p>
     </div>
 </footer>
-
 <!-- Back to Top -->
 <button id="back-to-top" class="fixed bottom-6 right-6 bg-primary-blue text-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 hidden z-50" title="Back to Top">
     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
     </svg>
 </button>
-
 <!-- Tailwind Script -->
 <script src="https://cdn.tailwindcss.com"></script>
 <!-- AOS Script (moved to end for better loading) -->
@@ -483,8 +465,8 @@
         darkMode: 'class',
         theme: {
             extend: {
-                colors: { 
-                    'primary-blue': '#3B82F6', 
+                colors: {
+                    'primary-blue': '#3B82F6',
                     'primary-dark': '#1F2937',
                     'primary-teal': '#14B8A6',
                     'accent-green': '#10B981'
@@ -506,27 +488,22 @@
         }
     }
 </script>
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Theme Toggle
         const html = document.documentElement;
         const savedTheme = localStorage.getItem('theme');
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
         if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
             html.classList.add('dark');
         }
-
         const toggle = document.getElementById('theme-toggle');
         const icon = toggle.querySelector('i');
-
         if (html.classList.contains('dark')) {
             icon.className = 'fas fa-sun';
         } else {
             icon.className = 'fas fa-moon';
         }
-
         toggle.addEventListener('click', () => {
             html.classList.toggle('dark');
             if (html.classList.contains('dark')) {
@@ -537,27 +514,22 @@
                 icon.className = 'fas fa-moon';
             }
         });
-
         AOS.init({ duration: 800, once: true, offset: 100 });
-
         // Custom scroll observer
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('animate'); });
         }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
         document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
-
         // Navbar Mobile Menu Toggle (defensive: ensure overlay cannot accidentally block page)
         const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
         const mobileMenu = document.getElementById('mobile-menu');
         const mobileMenuClose = document.getElementById('mobile-menu-close');
-
         if (mobileMenu) {
             // Ensure overlay is hidden and non-interactive on load
             mobileMenu.classList.add('hidden');
             mobileMenu.setAttribute('aria-hidden', 'true');
             mobileMenu.style.pointerEvents = 'none';
         }
-
         const showMobileMenu = () => {
             if (!mobileMenu) return;
             mobileMenu.classList.remove('hidden');
@@ -565,7 +537,6 @@
             // allow interactions when visible
             mobileMenu.style.pointerEvents = '';
         };
-
         const hideMobileMenu = () => {
             if (!mobileMenu) return;
             mobileMenu.classList.add('hidden');
@@ -573,7 +544,6 @@
             // prevent accidental blocking if CSS toggles fail
             mobileMenu.style.pointerEvents = 'none';
         };
-
         if (mobileMenuToggle) {
             mobileMenuToggle.addEventListener('click', () => {
                 if (mobileMenu && mobileMenu.classList.contains('hidden')) showMobileMenu(); else hideMobileMenu();
@@ -588,7 +558,6 @@
             if (backToTopBtn) backToTopBtn.classList.toggle('hidden', window.scrollY <= 300);
         });
         if (backToTopBtn) backToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
         // Animate all progress rings on load (staggered)
         const rings = document.querySelectorAll('.progress-ring');
         rings.forEach((ring, i) => {
@@ -600,7 +569,6 @@
                 }
             }, i * 150); // Stagger by 150ms each
         });
-
         // Toast
         setTimeout(() => {
             const toast = document.getElementById('toast');
@@ -610,7 +578,6 @@
                 setTimeout(() => toast.classList.remove('show'), 3000);
             }
         }, 2000);
-
         // Pop-up function
         window.showMotivation = function() {
             const toast = document.getElementById('toast');
@@ -621,7 +588,6 @@
                 setTimeout(() => toast.classList.remove('show'), 3000);
             }
         }
-
         // Smooth anchors
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', e => {
