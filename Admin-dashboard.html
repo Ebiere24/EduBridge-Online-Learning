@@ -115,23 +115,36 @@
             animation: slide-in-right 0.3s ease-out;
         }
 
-        /* Palette Adjustments: Focus on dark mode for smoother navbar-to-dashboard transition */
-        /* Palette 1: Soft Denim Blues (Active - Muted & Approachable) */
-        html.dark nav.navbar {
-            background: linear-gradient(180deg, #2C3E50 0%, #34495E 100%) !important;
+        /* --- Palette Adjustments: Balanced Theme Tones --- */
+
+        /* 1. Fix the Light Mode Theme Glare */
+        html:not(.dark) body {
+            background-color: #f8fafc !important; /* Soft Tailwind slate-50 instead of bright white */
         }
         .dashboard-header {
-            background-color: #A7C7E7 !important;
-            border-bottom: 1px solid #5A94D1 !important;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+            background-color: #f1f5f9 !important; /* Muted, modern light gray panel background */
+            border-bottom: 1px solid #cbd5e1 !important; /* Softer, low-contrast border line */
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
         }
         .dashboard-header h1 {
-            color: #2C3E50 !important;
+            color: #1e293b !important; /* Dark slate text instead of harsh black */
+        }
+
+        /* 2. Dark Mode Dashboard Settings */
+        html.dark nav.navbar {
+            background: #2C3E50 !important; 
+        }
+        html.dark .dashboard-header {
+            background-color: #2C3E50 !important;
+            border-bottom: 1px solid #1e293b !important;
+        }
+        html.dark .dashboard-header h1 {
+            color: #ffffff !important;
         }
 
         /* General transition for cohesion */
-        nav.navbar, .dashboard-header {
-            transition: background-color 0.3s ease;
+        nav.navbar, .dashboard-header, body {
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         /* Markdown hint styles */
@@ -175,10 +188,13 @@
     </style>
 </head>
 <body class="flex flex-col min-h-screen scrollbar-hide"> 
-    <!-- Navigation Navbar Fixed (inserted from homepage) -->
-    <nav class="bg-white shadow-lg dark:bg-gray-800 dark:shadow-gray-900 fixed top-0 left-0 right-0 z-50 transition-all duration-300 navbar">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between py-4">
+    <!-- Replace 'shadow-lg dark:shadow-gray-900' with 'shadow-md dark:shadow-black/40' -->
+    <!-- Navigation Navbar Fixed (Slimmed Down Version) -->
+<!-- Change bg-white to match your primary dark blue background theme -->
+<nav class="bg-[#1e293b] shadow dark:bg-gray-800 dark:shadow-black/20 fixed top-0 left-0 right-0 z-50 transition-all duration-300 navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Changed py-4 to py-3.5 to reduce height -->
+        <div class="flex items-center justify-between py-3.5">
                 <!-- Logo Left -->
                 <div class="flex-shrink-0">
                     <div class="flex items-center space-x-2">
